@@ -1,0 +1,89 @@
+{% extends 'base.html' %} {% load static %} {% block body %}
+
+<h1>Dashboard</h1>
+<div style="display: flex; justify-content: space-around" justify-content: space-around">
+  <div>
+    <h2 style="text-align: center">Formas de Pagamentos(%)</h2>
+    <img
+      src="data:image/png;base64,{{ grafico_forma_pg }}"
+      alt="Gráfico das Formas de Pagamento"
+    />
+  </div>
+  <div>
+    <h2 style="text-align: center">Valor Vendas / Categorias(%)</h2>
+    <img
+      src="data:image/png;base64,{{ grafico_total_categoria }}"
+      alt="Gráfico das Vendas"
+    />
+  </div>
+  <div>
+    <h2 style="text-align: center">Valor Vendas / Marcas(%)</h2>
+    <img
+      src="data:image/png;base64,{{ grafico_total_marca }}"
+      alt="Gráfico das Marcas"
+    />
+  </div>
+  <div class="bloco_filtro_dashboard">
+    <form method="POST" action="{% url 'dashboard' %}" onsubmit="return preventMultipleSubmissions(this);">
+      {% csrf_token %}
+      <div style="display: flex; flex-wrap: wrap;">
+        <p style="flex-basis: 100%">ANOS:</p>
+        {% for ano in anos_unicos %}
+          <label style="flex-basis: 30%;">
+            <div style="display: flex; margin-top: -20px;">
+              <input type="checkbox" name='filtro_anos' value="{{ ano }}" class="filtro_dashboard_anos" {% if ano in anos %} checked {% endif %}>
+              <p>{{ano}}</p>
+            </div>
+          </label>
+        {% endfor %}
+      </div>
+      <hr>
+      <div style="display: flex; flex-wrap: wrap;">
+        <p style="flex-basis: 100%;">MESES:</p>
+        {% for mes in meses_unicos %}
+          <label style="flex-basis: 33.33%;">
+            <input type="checkbox" name="filtrar_meses" value="{{mes}}" class="filtro_dashboard" {% if mes in meses_selecionados_nomes %} checked {% endif %}> {{ mes }}
+          </label>
+        {% endfor %}
+      </div>
+      <hr>
+      <input type="submit" name="action" value="Filtrar">
+    </form>
+  </div>
+</div>
+<hr />
+<div style="display: flex; justify-content: space-around">
+  <div>
+    <h2 style="text-align: center">Vendas por Marcas(QTD)</h2>
+    <img
+      src="data:image/png;base64,{{ grafico_quat_marca }}"
+      alt="Gráfico Quantidade Vendidas por Marcas"
+    />
+  </div>
+  <div>
+    <h2 style="text-align: center">Vendas Mensais(R$)</h2>
+    <img
+      src="data:image/png;base64,{{ grafico_vendas_mensais }}"
+      alt="Gráfico das Vendas"
+    />
+  </div>
+</div>
+<hr />
+<div style="display: flex; justify-content: space-around">
+  <div>
+    <h2 style="text-align: center">Produtos mais vendidos(R$)</h2>
+    <img
+      src="data:image/png;base64,{{ grafico_vendas_porduto }}"
+      alt="Gráfico das Vendas"
+    />
+  </div>
+  <div>
+    <h2 style="text-align: center">Produtos mais vendidos(QTD)</h2>
+    <img
+      src="data:image/png;base64,{{ grafico_quant_prod_ved }}"
+      alt="Gráfico das Vendas"
+    />
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - CODEWEVE</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="body">
+    <div style="display: flex;">
+      <div>
+        <img src="static/imagens/logo.jpeg" width="500px" style="margin: 70px 0 0 300px;">
+      </div>
+      <div class="login">
+        <h1 class="titulo">Login</h1>
+        <hr class="hr_login">
+        <form method="post" action="{% url 'login_view' %}" onsubmit="disableSubmitButton(this);">
+          {% csrf_token %}
+            <label class="label_login" for="username">Usuário:</label>
+            <input class="input_login" type="text" id="username" name="username" placeholder="Digite seu usuario" />
+            <label class="label_login" for="password">Senha:</label>
+            <input class="input_login" type="password" id="password" name="password" placeholder="Digite a senha" />
+            <input class="botao_login" type="submit" value="Login" />
+            {% if error %}
+              <p style="color: red;">{{ error }}</p>
+            {% endif %}
+          </div>
+          
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

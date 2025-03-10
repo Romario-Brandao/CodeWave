@@ -1,0 +1,38 @@
+{% extends 'base.html' %} {% load static %} {% block body %}
+
+<!-- <div class="div_centralizada_geral"> -->
+<div class="form_fornecedor form_fornecedor_relatorio">
+  <h1>Relatório de Serviços</h1>
+  <hr style="width: 90%; background-color: black; margin: 0 0 30px 0;">
+  <table>
+    <thead>
+      <tr>
+        <th class="cabec_rel_prod">ID</th>
+        <th class="cabec_rel_prod">Serviço</th>
+        <th class="cabec_rel_prod">Valor</th>
+        <th class="cabec_rel_prod">Quantidade</th>
+        <th class="cabec_rel_prod">Faturamento</th>
+        <th class="cabec_rel_prod">1º Carro C/ +</th>
+        <th class="cabec_rel_prod">2º Carro C/ +</th>
+        <th class="cabec_rel_prod">3º Carro C/ +</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in servico_info %}
+      <tr>
+        <td class="font_rel_est">{{ item.servico.id }}</td>
+        <td class="font_rel_est">{{ item.servico.nome }}</td>
+        <td class="font_rel_est">{{ item.servico.valor }}</td>
+        <td class="font_rel_est">{{ item.servico.quant_servicos }}</td>
+        <td class="font_rel_est">{{ item.faturamento|floatformat:2 }}</td>
+        <td class="font_rel_est">{{ item.carros.0|default:'' }}</td>
+        <td class="font_rel_est">{{ item.carros.1|default:'' }}</td>
+        <td class="font_rel_est">{{ item.carros.2|default:'' }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+</table>
+
+      
+</div>
+{% endblock %}

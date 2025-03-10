@@ -1,0 +1,47 @@
+{% extends 'base.html' %} {% load static %} {% block body %}
+
+<div class="form_fornecedor">
+  <h1>Custos Extras</h1>
+  <div class="caixas_barra_pesquisa">
+    <h4 class="nome_caixa_item">Fornecedor:</h4>
+    <select name="fornecedor" class="caixa1">
+      <option value=""></option>
+      {% for item in fornecedores %}
+      <option value="{{item.id}}">{{item.nome}}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="caixas_barra_pesquisa">
+    <h4 class="nome_caixa_item">Parcela:</h4>
+    <input type="text" name="parcela" class="caixa2" value="1 / 1"> 
+  </div>
+  <div class="caixas_barra_pesquisa_total">
+    <h4 class="nome_caixa_item_parcelas">Forma de pagamento:</h4>
+    <select name="forma_pg" class="caixa4" required>
+      <option value="">---</option>
+      <option value="BOLETO">Boleto</option>
+      <option value="C.CREDITO">C.Crédito</option>
+      <option value="C.DEBITO">C.Débito</option>
+      <option value="DINHEIRO">Dinheiro</option>
+      <option value="PIX / TRANSFERENCIA">PIX / Transferência</option>
+    </select>
+  </div>
+  <div class="caixas_barra_pesquisa_total">
+    <h4 class="nome_caixa_item_parcelas">Valor:</h4>
+    <input class="caixa2_parcelas" required name="valor_{{ forloop.counter }}" type="text" value="{{ valor_parcela }}" oninput="this.value=this.value.replace(/[^0-9,]/g, '').replace(/(,.*?)(,.*)/, '$1').replace(/(\d+),(\d{2})(\d.*)/, '$1,$2')">
+  </div>
+  <div class="caixas_barra_pesquisa_total">
+    <h4 class="nome_caixa_item_parcelas">Vencimento:</h4>
+    <input class="caixa2_parcelas widht_data" required name="vencimento_{{ forloop.counter }}" type="date"
+      name="vencimento_{{ forloop.counter}}">
+  </div>
+  <div class="caixas_barra_pesquisa_total">
+    <h4 class="nome_caixa_item_parcelas">OBS:</h4>
+    <input class="caixa2_parcelas" type="text" name="obs_{{ forloop.counter }}"
+      name="obs_{{ forloop.counter }}">
+  </div>
+  
+</div>
+
+
+{% endblock %}

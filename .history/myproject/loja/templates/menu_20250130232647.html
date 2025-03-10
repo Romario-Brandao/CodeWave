@@ -1,0 +1,72 @@
+{% extends 'base.html' %} {% load static %} {% block body %}
+
+<div style="display: flex">
+  <div>
+    <img src="static/imagens/logo.jpeg" width="350px" style="margin: 100px 0 0 200px" />
+  </div>
+  <div class="menu">
+    <h1>Menu</h1>
+    <div class="menu2">
+      {% if admin %}
+      <a class="link_menu" href="/admin/">Administrador</a>
+      <hr>
+      <a class="link_menu" href="{% url 'folha_pagamento' %}">Folha de Pagamento</a>
+      <hr>
+      <a class="link_menu" href = "{% url 'cadastro_profissionais' %}">Cadastro de Profissionais</a>
+      {% endif %}
+      <hr>
+      <a class="link_menu" href="{% url 'servicos' %}">Abrir Caixa de Vendas / Serviços</a>
+      <hr>
+      <a class="link_menu" href="{% url 'caixa_compra' %}">Abrir Caixa de Compras</a>
+      <hr>
+      <a class="link_menu" href="{% url 'contas_receber' %}">Financeiro - Contas a Receber</a>
+      <hr>
+      <a class="link_menu" href="{% url 'contas_pagar' %}">Financeiro - Contas a Pagar</a>
+      <hr>
+      <div class="barra_menu_relatorio">
+        <a class="link_menu">Relatórios</a>
+        <div class="menu_relatorio">
+          <a class="link_menu" href="{% url 'rel_cliente' %}">Relatório de Clientes</a>
+          <a class="link_menu" href="{% url 'rel_fornecedor' %}">Relatório de Fornecedores</a>
+          <a class="link_menu" href="{% url 'rel_produto' %}">Relatório de Produtos</a>
+          <a class="link_menu" href="{% url 'rel_servico' %}">Relatório de Servico</a>
+          <a class="link_menu" href="{% url 'rel_veiculo' %}">Relatório de Veículos</a>
+          <a class="link_menu" href="{% url 'rel_funcionario' %}">Relatório de Funcionários</a>
+        </div>
+      </div>
+      <hr>
+      <a class="link_menu" href="{% url 'cadastrar_produtos' %}">Cadastro de Produtos</a>
+      <hr>
+      <a class="link_menu" href="{% url 'cadastrar_fornecedor' %}">Cadastrar Fornecedor</a>
+      <hr>
+      <a class="link_menu" href="{% url 'cadastrar_cliente' %}">Cadastrar Cliente</a>
+      <hr>
+      <a class="link_menu" href = "{% url 'cadastro_veiculos' %}">Cadastro de Veiculos</a>
+      <hr>
+      <a class="link_menu" href="{% url 'controle_estoque' %}">Controle de estoque</a>
+      <hr>  
+      <a class="link_menu" href="{% url 'dashboard' %}">Dashboard </a>
+      <hr>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Variável para manter a contagem
+  let count = 1;
+
+  // Percorre todos os elementos <a> com a classe "link_menu"
+  document.querySelectorAll('.link_menu').forEach((link) => {
+    // Verifica se o <a> está visível e não está dentro da div com a classe "menu_relatorio"
+    if (
+      link.offsetParent !== null && // Verifica se está visível
+      !link.closest('.menu_relatorio') // Verifica se não está dentro de .menu_relatorio
+    ) {
+      // Adiciona a numeração no texto do link
+      link.textContent = `${String(count).padStart(2, '0')} - ${link.textContent}`;
+      count++; // Incrementa o contador
+    }
+  });
+</script>
+
+{% endblock %}

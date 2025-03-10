@@ -1,0 +1,52 @@
+{% extends 'base.html' %} {% load static %} {% block body %}
+
+<!-- <div class="div_centralizada_geral"> -->
+<div class="form_fornecedor form_fornecedor_relatorio">
+  <h1>Relatório de Serviço realizado - {{ os.profissional.nome }}</h1>
+  <hr style="width: 90%; background-color: black; margin: 0 0 30px 0;">
+  <table>
+    <thead>
+        <tr>
+            <th class="cabec_rel_prod">OS</th>
+            <th class="cabec_rel_prod">Data</th>
+            <th class="cabec_rel_prod">Serviço</th>
+            <th class="cabec_rel_prod">Valor</th>
+            <th class="cabec_rel_prod">Acrescimo</th>
+            <th class="cabec_rel_prod">Desconto</th>
+            <th class="cabec_rel_prod">Veiculo</th>
+            <th class="cabec_rel_prod">Profissional</th>
+            <th class="cabec_rel_prod">Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if os %}
+            {% for item in os %}
+            <tr>
+                {% load static %}
+                <td class="font_rel_est">
+                    <a href="{% static 'imagens/os/os_'%}{{item.os}}.pdf" target="_blank">
+                        {{item.os}}
+                    </a>
+                </td>
+                <td class="font_rel_est">{{ item.data_cadastro|date:"d/m/Y" }}</td>
+                <td class="font_rel_est">{{ item.servico.nome }}</td>
+                <td class="font_rel_est">{{ item.valor_no_momento }}</td>
+                <td class="font_rel_est">{{ item.acrescimo }}</td>
+                <td class="font_rel_est">{{ item.desconto }}</td>
+                <td class="font_rel_est">{{ item.veiculo.placa }}</td>
+                <td class="font_rel_est"></td>
+                <td class="font_rel_est">{{ item.total }}</td>
+            </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="8" class="font_rel_est" style="text-align: center; font-weight: bold;">
+                    Cliente sem nenhum serviço cadastrado
+                </td>
+            </tr>
+        {% endif %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}

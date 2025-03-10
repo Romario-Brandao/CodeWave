@@ -1,0 +1,873 @@
+.body_caixa {
+  background-color: #09428e;
+  background-color: rgba(1, 5, 8, 0.871);
+  width: 1450px;
+  height: 100%;
+  margin: 50px 0 0 60px;
+}
+
+.caixa,
+.sub_valor,
+.forma_pg_valor {
+  background-color: rgb(255, 255, 255);
+}
+
+.nome_caixa_item,
+.nome_caixa_pg,
+.titulos_lista_produtos,
+.sub,
+.forma_pg {
+  color: rgb(255, 255, 255);
+  background-color: rgba(0, 183, 255, 0.336);
+}
+
+/*  */
+.cabecalho {
+  background-color: blue;
+  color: white;
+  /* Adicione esta linha se quiser que o texto dentro do cabeçalho fique branco */
+  padding: 2px;
+  /* Adicione algum preenchimento para melhorar a aparência */
+  display: flex;
+}
+
+.ferramentas {
+  height: 83px;
+  width: 200px;
+  margin: 0 0 0 400px;
+}
+
+/*  */
+
+.barra_pesquisa {
+  display: flex;
+  padding: 0 0 0 -10px;
+}
+
+/*  */
+/*  */
+
+.item_ferramenta {
+  margin: 10px 0 0 0;
+  background-color: blue;
+  border-radius: 3px;
+  text-align: center;
+  height: 50px;
+  width: 100px;
+  border-radius: 7px;
+  border: 1px solid black;
+  color: aliceblue;
+}
+
+/*  */
+
+.caixa_item {
+  margin: 0 0 0 20px;
+}
+
+.caixa_item_compra {
+  margin: 0 0 0 40px;
+}
+
+.caixa_item1 {
+  margin: 0 0 0 0;
+}
+
+.sub_pg {
+  display: flex;
+}
+
+.nome_caixa_item {
+  border-radius: 7px 7px 0 0;
+  height: 20px;
+  width: 250px;
+  margin: 0;
+}
+
+.caixa1 {
+  border: 0;
+  width: 250px;
+  height: 50px;
+  border-radius: 0 0 7px 7px;
+  background-color: aliceblue;
+  margin-top: 0;
+}
+
+
+
+.caixa_data {
+  border: 0;
+  width: 249px;
+  height: 50px;
+  border-radius: 0 0 7px 7px;
+  background-color: aliceblue;
+  margin-top: 0;
+}
+
+.caixa2 {
+  border: 0;
+  width: 246px;
+  height: 50px;
+  border-radius: 0 0 7px 7px;
+  background-color: aliceblue;
+  margin-top: 0;
+}
+
+.tamanho_cod_produto {
+  width: 126px;
+  height: 49px;
+  margin: 0 20px 0 0;
+}
+
+.tamanho_cod_produto2 {
+  width: 130px;
+  margin: 0 20px 0 0;
+}
+
+.tamanho_cod_produto3 {
+  margin: 0 -70px 0 80px;
+}
+
+.caixas_barra_pesquisa {
+  width: 200px;
+  height: 100px;
+  margin: 0 0 10px 75px;
+  border: 0;
+}
+
+.caixas_barra_pesquisa2 {
+  width: 200px;
+  height: 100px;
+  margin: 0 0 10px 40px;
+  border: 0;
+}
+
+.caixas_barra_pesquisa_excuir {
+  width: 215px;
+  height: 100px;
+  margin: 0 60px 0 10px;
+  border: 0;
+}
+
+.espacamento_caixa_excluir_compra {
+  margin-left: 430px;
+}
+
+.caixa_botoes {
+  margin: 0 0 0 70px;
+}
+
+.botao_caixa {
+  width: 70px;
+  height: 50px;
+  border: 1px solid blue;
+  margin: 0 0 0 10px;
+  background-color: rgb(25, 0, 255);
+  border-radius: 7px;
+  color: #ffffff;
+}
+
+/*  */
+
+.tela_principal {
+  display: flex;
+}
+
+/*  */
+
+.caixa_item_2 {
+  margin: 0 10px 20px 0;
+}
+
+.caixa_item_3 {
+  margin: 0 0 20px 70px;
+}
+
+.excluir_item {
+  margin: 20px 0 0 7px;
+}
+
+.excluir_item {
+  margin: 20px 0 0 70px;
+}
+
+.titulos_lista_produtos {
+  background-color: rgba(0, 17, 255, 0.596);
+  /* text-align: justify; */
+  text-align: center;
+  height: 20px;
+  width: 100%;
+  margin: 0;
+  border-radius: 5px 5px 0 0;
+}
+
+.resumo_caixa {
+  border-radius: 7px;
+  margin: 0 0 0 5px;
+  width: 990px;
+  height: 343px;
+  background-color: rgb(255, 255, 255);
+  overflow-y: auto;
+}
+
+.resumo_caixa2 {
+  margin: 0 0 0 -780px;
+}
+
+.resumo_caixa3 {
+  border-radius: 7px;
+  margin: 0 0 0 5px;
+  width: 830px;
+  height: 343px;
+  background-color: rgb(255, 255, 255);
+  overflow-y: auto;
+}
+
+.div_excluir_servico {
+  display: flex;
+  margin: 0 0 0 600px;
+}
+
+.sub {
+  width: 290px;
+  margin: 21px 10px 0 620px;
+  border-radius: 7px 7px 0 0;
+}
+
+.sub_valor {
+  width: 290px;
+  height: 49px;
+  margin: 0 10px 0 620px;
+  border-radius: 0 0 7px 7px;
+}
+
+.forma_pg {
+  width: 290px;
+  margin: 21px 10px 0 10px;
+  border-radius: 7px 7px 0 0;
+}
+
+.forma_pg_valor {
+  width: 290px;
+  height: 49px;
+  margin: 0 80px 0 10px;
+  border-radius: 0 0 7px 7px;
+}
+
+.butao_excluir_servico {
+  width: 120px;
+  height: 50px;
+  border-radius: 7px;
+  background-color: #8e091b;
+  border: 1px solid white;
+}
+
+.butao_excluir_servico:hover {
+  background-color: #be0b0bd2;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.finalizar_compra {
+  margin: 0 0 0 10px;
+}
+
+.butao_excluir_servico1 {
+  margin: 0 0 0 20px;
+}
+
+.butao_servico {
+  width: 120px;
+  height: 50px;
+  border-radius: 7px;
+  background-color: #09428e;
+  border: 1px solid white;
+}
+
+.butao_servico:hover {
+  background-color: #0b59be;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.botao_cadastrar_produtos,
+.botao_laterar_produtos {
+  display: flex;
+}
+
+.botao_adicionar {
+  margin: 20px 0 0 20px;
+  height: 35px;
+}
+
+.titulo_cadastro {
+  display: flex;
+}
+
+tbody th {
+  font-weight: normal;
+  /* Remove o negrito */
+  font-family: Arial, sans-serif;
+  /* Altere para a fonte desejada */
+  font-size: 14px;
+}
+
+.cabec_rel_prod {
+  /* font-weight: normal; */
+  /* Remove o negrito */
+  font-family: Arial, sans-serif;
+  /* Altere para a fonte desejada */
+  font-size: 13px;
+}
+
+.font_rel_est {
+  font-weight: normal;
+  /* Caso existam células <td>, remova o negrito também */
+  font-family: Arial, sans-serif;
+  /* Altere para a fonte desejada */
+  font-size: 11px;
+}
+
+tbody td {
+  font-weight: normal;
+  /* Caso existam células <td>, remova o negrito também */
+  font-family: Arial, sans-serif;
+  /* Altere para a fonte desejada */
+  font-size: 14px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  /* border: 1px solid black;
+  padding: 8px; */
+  text-align: left;
+}
+
+tr:nth-child(even) {
+  background-color: #add8e6;
+  /* Cor azul claro */
+}
+
+.bloco_filtro {
+  margin: 0 50px 20px 10px;
+  border-left: 1px solid rgb(248, 3, 3);
+}
+
+.itens_bloco_filtro {
+  margin: 0 0 0 10px;
+}
+
+.bloco_cad_prod,
+.bloco_alt_prod {
+  border: 1px solid blue;
+  height: 400px;
+  width: 500px;
+  padding: 20px;
+  margin: 0 20px 0 0;
+  border-radius: 7px;
+}
+
+.tabela {
+  margin-bottom: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f8ff;
+}
+
+.form_fornecedor {
+  width: 50%;
+  margin: auto;
+  border: 1px solid blue;
+  background-color: #e3f2fd;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+  color: #1e88e5;
+}
+
+hr {
+  border: 1px solid #1e88e5;
+}
+
+.table_fornecedor {
+  width: 100%;
+  margin-bottom: 20px;
+  border-spacing: 10px;
+  /* Espaço entre células */
+}
+
+td {
+  padding: 10px;
+}
+
+.label_for {
+  font-weight: bold;
+  color: #1565c0;
+}
+
+.input_cad_cli_for {
+  width: 500px;
+  padding: 10px;
+  border: 1px solid #64b5f6;
+  border-radius: 4px;
+  background-color: #ffffff;
+  font-size: 14px;
+}
+
+.input_cad_cli_for_select {
+  width: 523px;
+}
+
+textarea.input_cad_cli_for {
+  resize: none;
+}
+
+.input_cad_cli_for:focus {
+  border-color: #1e88e5;
+  outline: none;
+}
+
+.btn_submit_for {
+  background-color: #1e88e5;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: block;
+  margin: 20px auto;
+}
+
+.btn_submit_for:hover {
+  background-color: #1565c0;
+}
+
+.quant_vend_ult_d {
+  border: 0;
+  font-weight: bold;
+  font-size: 12px;
+  background-color: None;
+}
+
+.finalizar_excluir_item_compra {
+  margin: -30px 0 0 585px;
+}
+
+.espaco_logo {
+  display: flex;
+  background-color: rgba(1, 5, 8, 0.871);
+  width: 100%;
+  margin: 0 0 5px 0;
+}
+
+.imagem_logo {
+  margin: 0 0 0 20px;
+}
+
+.nome_do_usuario {
+  /* align-items: end; */
+  color: #ffffff;
+  margin-left: auto;
+  padding: 0 40px 0 0;
+  font-size: 12px;
+}
+
+.menu {
+  border: 1px solid black;
+  border-radius: 7px;
+  align-items: baseline;
+  height: 560px;
+  width: 400px;
+  margin: 60px 0 0 200px;
+  padding: 20px 10px 0 20px;
+  background-color: rgba(1, 5, 8, 0.871);
+
+}
+
+.menu2 {
+  max-height: 480px;
+  /* Define a altura máxima para a div menu2 */
+  overflow-y: auto;
+  /* Ativa a barra de rolagem vertical apenas para menu2 */
+  scrollbar-width: none;
+  /* Remove a barra visível no Firefox */
+  -ms-overflow-style: none;
+  /* Remove a barra no IE e Edge */
+}
+
+.menu2::-webkit-scrollbar {
+  display: none;
+  /* Remove a barra de rolagem nos navegadores WebKit */
+}
+
+.link_menu {
+  text-decoration: none;
+  color: #ffffff;
+  display: inline-block;
+  /* Permite que o background preencha o espaço */
+  transition: background-color 0.2s;
+  /* Suaviza a transição de cor */
+  width: 100%;
+  height: 30px;
+  /* padding: 1px 0 0 2px; */
+}
+
+.link_menu:hover,
+a:active,
+a:focus {
+  text-decoration: none;
+  /* Mantém o sublinhado removido mesmo ao passar o mouse ou focar */
+  color: inherit;
+  /* Mantém a cor ao passar o mouse ou focar */
+}
+
+.link_menu:hover {
+  background-color: #ffffff;
+  /* Define a cor de fundo ao passar o mouse */
+  border-radius: 5px;
+}
+
+.resumo_contas_pag_rec {
+  border-right: 1px solid red;
+  margin: 0 10px 0 0;
+  padding: 0 10px 0 0;
+}
+
+.btn-logout {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin: 3px 3px 0 0;
+}
+
+.btn-logout:hover {
+  background-color: #d32f2f;
+}
+
+.body {
+  text-align: center;
+  /* background: linear-gradient(to bottom, rgb(0, 217, 255) 50%, rgb(17, 0, 255) 100%); */
+  background: linear-gradient(to bottom, #011b4d 40%, #f70202 190%);
+  /* background: linear-gradient(to bottom, #001845 50%, #000 100%); */
+  overflow: hidden;
+  height: 100vh;
+  margin: 0;
+  position: relative;
+}
+
+.login {
+  border: solid 3px rgb(248, 61, 4);
+  margin: 60px 0 200px 200px;
+  padding: 50px;
+  border-radius: 20px;
+  width: 300px;
+  text-align: left;
+  color: white;
+}
+
+.login h1 {
+  color: rgb(3, 248, 3);
+  /* Define a cor verde clara para o título "Login" */
+}
+
+.login,
+.input_login,
+.hr_login {
+  margin-bottom: 20px;
+  /* Adiciona espaçamento abaixo do <hr> */
+}
+
+.titulo {
+  text-align: center;
+}
+
+.label_login {
+  display: block;
+  /* Garante que o rótulo ocupe uma linha inteira */
+  margin-top: 10px;
+  /* Adiciona espaço acima dos rótulos */
+}
+
+.caixa_login {
+  width: calc(100% - 22px);
+  /* Adapta a largura ao container com 10px de padding e 1px de borda de cada lado */
+  padding: 10px;
+  border: 1px solid #ccc;
+  /* Cor e espessura da borda */
+  border-radius: 5px;
+  /* Cantos arredondados */
+  box-sizing: border-box;
+  /* Inclui padding e borda na largura total */
+}
+
+.botao_login {
+  background-color: rgb(0, 0, 255);
+  /* Cor de fundo do botão */
+  border: none;
+  /* Remove a borda padrão */
+  color: black;
+  /* Cor do texto */
+  padding: 10px 20px;
+  /* Espaçamento interno */
+  text-align: center;
+  /* Centraliza o texto */
+  text-decoration: none;
+  /* Remove sublinhado */
+  display: inline-block;
+  /* Permite a definição de padding e margin */
+  font-size: 16px;
+  /* Tamanho da fonte */
+  margin-top: 10px;
+  /* Espaçamento superior */
+  border-radius: 5px;
+  /* Cantos arredondados */
+  cursor: pointer;
+  /* Cursor de mãozinha ao passar o mouse */
+  transition: background-color 0.3s ease;
+  /* Transição suave para mudança de cor */
+}
+
+.botao_login:hover {
+  background-color: DarkBlue;
+  /* Cor de fundo ao passar o mouse */
+  color: #ccc;
+}
+
+.input_login {
+  margin: 20px 0 20px 0;
+  border: 1px solid #001845;
+  border-radius: 7px;
+  height: 30px;
+  width: 100%;
+}
+
+.caixa_div_produto {
+  margin: 30px 0 20px 0;
+  display: flex;
+}
+
+.produto_cadastro {
+  margin: 0 0 0 60px;
+}
+
+.label_uni_med {
+  margin: 0 0 0 47px;
+}
+
+.tr_cad_produtos {
+  width: 25%;
+}
+
+.bloco_filtro_dashboard {
+  margin: 10px 0 0 15px;
+}
+
+.filtro_dashboard_anos {
+  display: flex;
+}
+
+.caixas_barra_pesquisa3 {
+  width: 300px;
+}
+
+.caixa3,
+.nome_caixa_item3 {
+  width: 355px;
+}
+
+.butao_servico {
+  margin: 0 0 0 -5px;
+}
+
+.caixas_barra_pesquisa_total {
+  width: 120px;
+  height: 100px;
+  margin: 0 50px 10px 20px;
+  border: 0;
+  gap: 30px;
+}
+
+.nome_caixa_item_parcelas {
+  color: rgb(255, 255, 255);
+  background-color: rgba(0, 183, 255, 0.336);
+  border-radius: 7px 7px 0 0;
+  height: 20px;
+  width: 180px;
+  margin: 0;
+}
+
+.caixa2_parcelas {
+  border: 0;
+  width: 146.5%;
+  height: 50px;
+  border-radius: 0 0 7px 7px;
+  background-color: aliceblue;
+  margin-top: 0;
+}
+
+.button_fechamento {
+  height: 70%;
+  width: 120%;
+  background-color: rgba(0, 128, 0, 0.281);
+  border-radius: 7px;
+  border: 1px solid white;
+}
+
+.button_fechamento:hover {
+  background-color: rgba(0, 128, 0, 0.788);
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.caixa4 {
+  border: 0;
+  width: 180px;
+  height: 50px;
+  border-radius: 0 0 7px 7px;
+  background-color: aliceblue;
+  margin-top: 0;
+}
+
+.td_contas {
+  padding: 0;
+  margin: 0;
+  text-align: right;
+}
+
+
+.nome_caixa_item2 {
+  width: 120px;
+}
+
+.input_caixa_item2 {
+  width: 116px;
+}
+
+.table-container {
+  max-height: 300px;
+  /* Altura máxima da tabela */
+  overflow-y: auto;
+  /* Habilita rolagem vertical */
+}
+
+.table-fixa th {
+  position: sticky;
+  /* Torna os cabeçalhos fixos */
+  top: 0;
+  /* Fixa no topo durante a rolagem */
+  background-color: #f9f9f9;
+  /* Cor de fundo do cabeçalho */
+  z-index: 2;
+  /* Garante que o cabeçalho fique acima das células */
+}
+
+.widht_data {
+  width: 179px;
+}
+
+.hr_parcela {
+  width: 50%;
+  margin-left: 20px;
+  height: 0.10px;
+  background-color: yellow;
+  border: none;
+}
+
+
+.menu_relatorio {
+  display: none;
+  position: absolute;
+  /* Permite que o menu seja posicionado sobre outros elementos */
+  background-color: rgba(1, 5, 8, 0.871);
+  width: 300%;
+  padding: 10px;
+  z-index: 10;
+  /* Garante que o menu esteja acima de outros elementos */
+}
+
+.barra_menu_relatorio {
+  position: relative;
+  /* Necessário para que o menu seja posicionado relativo a este elemento */
+  width: 100%;
+}
+
+.barra_menu_relatorio:hover .menu_relatorio {
+  display: block;
+  left: 100px;
+  /* margin: 0 0 0 50%; */
+}
+
+
+
+.form_fornecedor_relatorio {
+  width: 95%;
+}
+
+.checkbox-container {
+  width: 100px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  /* Três colunas */
+  gap: 10px;
+  /* Espaçamento entre os itens */
+  align-items: center;
+  /* Alinha verticalmente os elementos */
+}
+
+
+.checkbox_folha {
+  display: flex;
+  justify-content: space-between;
+}
+
+.input_folha {
+  width: 80px;
+  border-radius: 3px;
+}
+
+#listaProdutos,
+#listaServicos {
+  position: absolute;
+  display: none;
+  width: 400px;
+  height: 220px;
+  overflow-y: auto;
+  border: 2px solid #00000065;
+  border-radius: 10px;
+  padding: 5px;
+  margin-top: 5px;
+  background-color: white;
+  color: #333;
+  outline: none;
+  z-index: 10;
+}
+
+#listaProdutos option:hover,
+#listaServicos option:hover {
+  background-color: #5490cf8c;
+  color: rgb(48, 45, 45);
+}
+
+.div_pai_custos_extras {
+  display: flex;
+  columns: 6;
+  background-color: rgba(0, 0, 0, 0.482);
+
+
+}

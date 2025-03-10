@@ -1,0 +1,78 @@
+{% extends 'base.html' %} {% load static %} {% block body %}
+
+<!-- <h1>Dashboard</h1> -->
+
+<h1>Faturamento mensal - Maiores compradores - Forma de pagamento por mês / ano</h1>
+<table>
+  <tr>
+    <th>Valor</th>
+    <th>Forma de Pagamento</th>
+    <th>Pagador</th>
+    <th>Tipo</th>
+    <th>Mês</th>
+    <th>Ano</th>
+  </tr>
+  
+  {% for item in vendas %}
+  <tr>
+    <td>{{ item.total }}</td>
+    <td>{{ item.forma_pg }}</td>
+    <td>{{ item.pagador.nome }}</td>
+    <td>Vendas</td>
+    <td>{{ item.vencimento|date:"M" }}</td>
+    <td>{{ item.vencimento|date:"Y" }}</td>
+  </tr>
+  {% endfor %}
+  {% for item in compras %}
+  <tr>
+    <td>{{ item.total }}</td>
+    <td></td>
+    <td></td>
+    <td>Compras</td>
+    <td>{{ item.vencimento|date:"M" }}</td>
+    <td>{{ item.vencimento|date:"Y" }}</td>
+  </tr>
+  {% endfor %}
+  {% for item in folha %}
+    {% if item.pg_salario %}
+      <tr>
+        <td>{{ item.salario_liquido }}</td>
+        <td></td>
+        <td></td>
+        <td>Salario</td>
+        <td>{{ item.pg_salario|date:"M" }}</td>
+        <td>{{ item.pg_salario|date:"Y" }}</td>
+      </tr>
+    {% endif %}
+  {% endfor %}
+  {% for item in folha %}
+    {% if item.pg_va_vt %}
+      <tr>
+        <td>
+          {% with total=item.va|add:item.vt %}
+              {{ total }}
+          {% endwith %}
+        </td>
+        <td></td>
+        <td></td>
+        <td>VA + VT</td>
+        <td>{{ item.pg_va_vt|date:"M" }}</td>
+        <td>{{ item.pg_va_vt|date:"Y" }}</td>
+      </tr>
+    {% endif %}
+  {% endfor %}
+  {% for item in custos_ex %}
+  <tr>
+    <td>{{ item.total }}</td>
+    <td></td>
+    <td></td>
+    <td>{{item.referencia}}</td>
+    <td>{{ item.vencimento|date:"M" }}</td>
+    <td>{{ item.vencimento|date:"Y" }}</td>
+  </tr>
+  {% endfor %}
+ 
+</table>
+
+
+{% endblock %}

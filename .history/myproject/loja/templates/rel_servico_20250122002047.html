@@ -1,0 +1,44 @@
+{% extends 'base.html' %} {% load static %} {% block body %}
+
+<!-- <div class="div_centralizada_geral"> -->
+<div class="form_fornecedor form_fornecedor_relatorio">
+    <h1>Relatório de Serviços</h1>
+    <hr style="width: 90%; background-color: black; margin: 0 0 30px 0;">
+    <table>
+        <thead>
+          <tr>
+            <th class="cabec_rel_prod">ID</th>
+            <th class="cabec_rel_prod">OS</th>
+            <th class="cabec_rel_prod">Servico</th>
+            <th class="cabec_rel_prod">Faturamento</th>
+            <!-- os = models.DecimalField(max_digits=100, decimal_places=0, default=0)
+                data_cadastro = models.DateTimeField(default=datetime.now)
+                servico = models.ForeignKey(TipoServicos, null=True, blank=True, on_delete=models.SET_NULL)
+                acrescimo = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+                desconto = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+                veiculo = models.ForeignKey(Veiculos, null=True, blank=True, on_delete=models.SET_NULL)
+                profissional = models.ForeignKey(Profissional, null=True, blank=True, on_delete=models.SET_NULL)
+                total = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+                status = models.BooleanField(default=False)
+                obs = models.CharField(null=True, blank=True, max_length=20) -->
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in veiculo_info %}
+          <tr>
+            <td class="font_rel_est">{{ item.veiculo.id }}</td>
+            <td class="font_rel_est">{{ item.veiculo.placa }}</td>
+            <td class="font_rel_est">{{ item.veiculo.cliente.nome }}</td>
+            <td class="font_rel_est">{{ item.veiculo.marca.nome }} - {{ item.veiculo.marca.modelo }}</td>
+            <td class="font_rel_est">{{ item.veiculo.ano }}</td>
+            <td class="font_rel_est">{{ item.veiculo.motor.nome }}</td>
+            <td class="font_rel_est">{{ item.veiculo.combustivel }}</td>
+            <td class="font_rel_est">{{ item.veiculo.transmissao }}</td>
+            <td class="font_rel_est">{{ item.veiculo.data_cadastro }}</td>
+            <td class="font_rel_est">{{ item.faturamento }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+</div>
+{% endblock %}

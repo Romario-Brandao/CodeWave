@@ -1,0 +1,160 @@
+{% extends 'base.html' %} {% load static %} {% block body %}
+
+<div class="body_caixa">
+  <div class="cabecalho">
+    <h1 style="text-align: center; margin-left: 600px; color: black;">CAIXA VENDAS</h1>
+    <div class="ferramentas">
+      <form method="POST" action="{% url 'caixa_venda' %}">
+        {% csrf_token %}
+        <button type="submit" class="item_ferramenta">Abrir novo caixa</button>
+      </form>
+    </div>
+  </div>
+  <div>
+    <hr>
+    <form method="POST" action="{% url 'adicionar_carrinho'%}">
+      {% csrf_token %}
+      <div class="barra_pesquisa">
+        <div class="caixas_barra_pesquisa">
+          <h4 class="nome_caixa_item">Nº Caixa:</h4>
+          <h4 class="caixa1">{{ n_caixa }}</h4>
+          <input type="hidden" name="n_caixa" value="{{ n_caixa }}"></input>
+        </div>
+        <div>
+          <div class="tamanho_cod_produto3">
+            <h4 class="nome_caixa_item tamanho_cod_produto2">COD PRODUTO</h4>
+            <input class="caixa2 tamanho_cod_produto" name="cod_produto" onchange="this.form.submit()" 
+            {% if not select_produto %} autofocus {% endif %}  
+            oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+          </div>
+        </div>
+        <div class="caixas_barra_pesquisa">
+          <h4 class="nome_caixa_item">BARRA DE PESQUISA</h4>
+          
+
+          <select class="caixa1" name="produto">
+            <option value="">---</option>
+            {% for item in produtos %}
+            {% if item.marca.id == 1 %}
+            <option {% if select_produto.id == item.id %} selected {% endif %} value="{{ item.id }}">{{ item.nome }} - R$
+              {{ item.preco_venda }}</option>
+            {% else %}
+            <option {% if select_produto.id == item.id %} selected {% endif %} value="{{ item.id }}">{{ item.nome }} {{ item.marca.nome }} - R$ {{ item.preco_venda }}</option>
+            {% endif %}
+            {% endfor %}
+          </select>
+        </div>
+        <div class="caixas_barra_pesquisa">
+          <h4 class="nome_caixa_item">QUANTIDADE</4>
+          <input class="caixa2" name="quantidade" {% if select_produto %} autofocus {% endif %}></input>
+        </div>
+        <div class="caixas_barra_pesquisa">
+          <h4 class="nome_caixa_item">DESCONTO</h4>
+          <input type="number" class="caixa2" name="desconto" step="0.01" min="0"></input>
+        </div>
+        <div class="caixa_botoes">
+          <button class="botao_caixa" type="submit" value="adicionar">Adicionar Item</button>
+        </div>
+      </div>
+    </form>
+    <hr>
+  </div>
+
+  <div class="tela_principal">
+    <div>
+      <img src="static/imagens/logo.jpeg" width="300px" style="margin: 20px 0 0 10px;">
+    </div>
+    <div>
+      <form method="POST" action="{% url 'finalizar_venda' %}">
+        {% csrf_token %}
+        <input type="hidden" name="n_caixa" value="{{ n_caixa }}"></input>
+        <div class="caixa_item_compra">
+          <div class="caixa_item_2">
+            <h4 class="nome_caixa_item">FORMA DE PAGAMENTO</h4>
+            <select class="caixa1" name="forma_pg">
+              <option value="">---</option>
+              {% for item in forma_pg %}
+              <option value="{{ item.id }}">{{ item.nome }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="caixa_item_2">
+            <h4 class="nome_caixa_item">CLIENTE</h4>
+            <select class="caixa1" name="cliente">
+              <option value="">---</option>
+              {% for item in clientes %}
+              <option value="{{ item.id }}">{{ item.nome }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="caixa_item_2">
+            <h4 class="nome_caixa_item">FRETE</h4>
+            <select class="caixa1" name="frete">
+              <option>RET</option>
+              <option>CIF</option>
+              <option>FOB</option>
+            </select>
+          </div>
+          <div class="caixa_item_2">
+            <h4 class="nome_caixa_item">OBSERVAÇÃO</h4>
+            <input class="caixa2" name="obs"></input>
+          </div>
+          <div class="caixa_item_2">
+            <h4 class="nome_caixa_item">TOTAL</h4>
+            <h4 class="caixa1">R$ {{ subtotal }}</h4>
+            <input type="hidden" name="subtotal" value="{{ subtotal }}">
+          </div>
+        </div>
+    </div>
+    <div>
+      <div class="resumo_caixa">
+        <h4 class="titulos_lista_produtos">LISTA DE PRODUTOS</h4>
+        <table>
+          <thead>
+            <tr>
+              <th>N item</th>
+              <th>Cód Produto</th>
+              <th>Nome do Produto</th>
+              <th>Valor Unitario</th>
+              <th>Quantidade</th>
+              <th>Desconto</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          {% for item in lista_caixa %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ item.produto.id }}</td>
+            {% if item.produto.marca.id == 1 %}
+            <td>{{ item.produto.nome }}</td>
+            {% else %}
+            <td>{{ item.produto.nome }} {{ item.produto.marca.nome }}</td>
+            {% endif %}
+            <td>{{ item.produto.preco_venda }}</td>
+            <td>{{ item.quantidade }}</td>
+            <td>{{ item.desconto }}</td>
+            <td>{{ item.total }}</td>
+          </tr>
+          {% endfor %}
+
+        </table>
+      </div>
+      <div class="finalizar_excluir_item_venda" style="display: flex;">
+        <div>
+          <button type="submit" name="action" value="finalizar_venda" class="finalizar_compra">Finalizar Venda</button>
+        </div>
+        <div class="caixas_barra_pesquisa_excuir espacamento_caixa_excluir_venda">
+          <h4 class="nome_caixa_item">Nº item</4>
+            <input class="caixa2" name="n_item"></input>
+            <input type="hidden" name="lista" value="{{ lista_caixa }}"></input>
+        </div>
+        <div>
+          <button type="submit" name="action" value="excluir_item" class="finalizar_compra">Excluir item</button>
+        </div>
+      </div>
+    </div>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

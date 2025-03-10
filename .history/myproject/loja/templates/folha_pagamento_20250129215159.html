@@ -1,0 +1,131 @@
+{% extends 'base.html' %} {% load static %} {% block body %}
+
+<!-- <div class="div_centralizada_geral"> -->
+<div class="form_fornecedor form_fornecedor_relatorio">
+    <h1>Folha de Pagamento</h1>
+    <hr style="width: 90%; background-color: black; margin: 0 0 30px 0;">
+    <!-- Filtro de ano e mes -->
+    <div style="display: flex;">
+      <div class="checkbox-container">
+        <div class="checkbox_folha" style="display: block; border-right: 1px solid blue; padding-right: 30px;">
+          <label>2025</label>
+          <input type="checkbox" value="2025" {% if ano_atual == 2025 %} checked {% endif %}>
+          <label>2026</label>
+          <input type="checkbox" value="2026" {% if ano_atual == 2026 %} checked {% endif %}>
+          <label>2027</label>
+          <input type="checkbox" value="2027" {% if ano_atual == 2027 %} checked {% endif %}>
+        </div>
+      </div>
+      <br>
+      <div class="checkbox-container">
+        <div class="checkbox_folha">
+          <label>JAN</label>
+          <input type="checkbox" value="1" {% if mes_atual == 1 %} checked {% endif %}>
+        </div>
+        <div class="checkbox_folha">
+          <label>FEV</label>
+          <input type="checkbox" value="2" {% if mes_atual == 2 %} checked {% endif %}>
+        </div>
+        <div class="checkbox_folha">
+          <label>MAR</label>
+          <input type="checkbox" value="3" {% if mes_atual == 3 %} checked {% endif %}>
+        </div>
+        <div class="checkbox_folha">
+          <label>ABR</label>
+          <input type="checkbox" value="4" {% if mes_atual == 4 %} checked {% endif %}>
+        </div>
+        <div class="checkbox_folha">
+          <label>MAI</label>
+          <input type="checkbox" value="5" {% if mes_atual == 5 %} checked {% endif %}>
+        </div>
+        <div class="checkbox_folha">
+          <label>JUN</label>
+          <input type="checkbox" value="6" {% if mes_atual == 6 %} checked {% endif %}>
+        </div>
+        <div class="checkbox_folha">
+          <label>JUL</label>
+          <input type="checkbox" value="7" {% if mes_atual == 7 %} checked {% endif %}>
+        </div>
+        <div class="checkbox_folha">
+          <label>AGO</label>
+          <input type="checkbox" value="8" {% if mes_atual == 8 %} checked {% endif %}>
+        </div>
+        <div class="checkbox_folha">
+          <label>SET</label>
+          <input type="checkbox" value="9" {% if mes_atual == 9 %} checked {% endif %}>
+        </div>
+        <div class="checkbox_folha">
+          <label>OUT</label>
+          <input type="checkbox" value="10" {% if mes_atual == 10 %} checked {% endif %}>
+        </div>
+        <div class="checkbox_folha">
+          <label>NOV</label>
+          <input type="checkbox" value="11" {% if mes_atual == 11 %} checked {% endif %}>
+        </div>
+        <div class="checkbox_folha">
+          <label>DEZ</label>
+          <input type="checkbox" value="12" {% if mes_atual == 12 %} checked {% endif %}>
+        </div>
+      </div>
+      <div>
+        <img src="static/imagens/tabela_inss_irrf2025.png" alt="Logo" width="600px" style="margin: 0 0 0 100px;" />
+      </div>
+    </div>
+    <br>
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>Nome</th>
+          <th>Cargo</th>
+          <th>Salário.B</th>
+          <th>INSS</th>
+          <th>IRRF</th>
+          <th>Outros Desc</th>
+          <th>Salário.L</th>
+          <th>V.A</th>
+          <th>V.T</th>
+          <th>AC DIA</th>
+          <th>Pagamento</th>
+          <th>FGTS</th>
+          <!-- <th>Obs</th> -->
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in relatorio %}
+          <tr>
+            <th><input type="checkbox"></th>
+            <th>{{ item.funcionario.nome }}</th>
+            <th>{{ item.funcionario.cargo.nome }}</th>
+            <th>{{ item.funcionario.salario }}</th>
+            <th>{{ item.inss }}</th>
+            <th>{{ item.irrf }}</th>
+            <th>{{ item.outros_descontos }}</th>
+            <th>{{ item.salario_liquido }}</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th>{{ item.fgts }}</th>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <br>
+    <div style="display: flex;">
+      <label>Pagamento:</label>
+      <input type="date">
+      <input type="submit" value="Lançar Pagamento">
+    </div>
+    <form method="POST" action="{% url 'folha_pagamento' %}">
+      {% csrf_token %}
+      <div style="display: flex;">
+        <label>Dias Uteis no mês</label>
+        <input name="mes" value="{{mes_atual}}">
+        <input name="ano" value="{{ano_atual}}">
+        <input name="dias_uteis">
+        <input type="submit" name="acao" value="Gravar">
+      </div>
+    </form>
+
+  </div>
+{% endblock %}

@@ -1,0 +1,166 @@
+{% extends 'base.html' %} {% load static %} {% block body %}
+
+<!-- <h1>Dashboard</h1> -->
+
+<h1>Faturamento mensal - Maiores compradores - Forma de pagamento por mês / ano</h1>
+<table>
+  <tr>
+    <th>Valor</th>
+    <th>Forma de Pagamento</th>
+    <th>Pagador</th>
+    <th>Custo</th>
+    <th>Mês</th>
+    <th>Ano</th>
+  </tr>
+  
+  {% for item in vendas %}
+  <tr>
+    <td>{{ item.valor }}</td>
+    <td>{{ item.forma_pg }}</td>
+    <td>{{ item.pagador.nome }}</td>
+    <td></td>
+    <td>{{ item.vencimento|date:"M" }}</td>
+    <td>{{ item.vencimento|date:"Y" }}</td>
+  </tr>
+  {% endfor %}
+  {% for item in resumo_custos %}
+  <tr>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>{{ item.total }}</td>
+    <td>{{ item.vencimento|date:"M" }}</td>
+    <td>{{ item.vencimento|date:"Y" }}</td>
+  </tr>
+  {% endfor %} 
+ 
+</table>
+<br>
+<hr>
+<hr>
+<br>
+<h1>Produtos mais vendidos - quant vendas realizadas - quant de itens vendidos</h1>
+<table>
+  <tr>
+    <th>Produto</th>
+    <th>Marca</th>
+    <th>Categoria</th>
+    <th>Valor</th>
+    <th>Quantidade</th>
+    <th>Mês</th>
+    <th>Ano</th>
+  </tr>
+  <!-- 
+  {% for item in os_produtos %}
+  <tr>
+    <td>{{ item.produto.nome }}</td>
+    <td>{{ item.produto.marca.nome }}</td>
+    <td>{{ item.produto.categoria.nome }}</td>
+    <td>{{ item.total }}</td>
+    <td>{{ item.quantidade }}</td>
+    <td>{{ item.data_cadastro|date:"M" }}</td>
+    <td>{{ item.data_cadastro|date:"Y" }}</td>
+  </tr>
+  {% endfor %} 
+  -->
+</table>
+<br><hr><hr><br>
+<h1>Despezas Gerais</h1>
+<table>
+  <tr>
+    <td>Referencia</td>
+    <td>Valor</td>
+    <td>Mês</td>
+    <td>Ano</td>
+  </tr>
+  <!-- inss -->
+  {% for item in folha %}
+    {% if item.inss %}
+      <tr>
+        <td>INSS</td>
+        <td>{{item.inss}}</td>
+        <td>{{item.pg_salario|date:'M'}}</td>
+        <td>{{item.pg_salario|date:'Y'}}</td>
+      </tr>
+    {% endif %}
+  {% endfor %}
+  <!-- irrf -->
+  {% for item in folha %}
+    {% if item.irrf %}
+      <tr>
+        <td>IRRF</td>
+        <td>{{item.irrf}}</td>
+        <td>{{item.pg_salario|date:'M'}}</td>
+        <td>{{item.pg_salario|date:'Y'}}</td>
+      </tr>
+    {% endif %}
+  {% endfor %}
+  <!-- salario liquido -->
+  {% for item in folha %}
+    {% if item.salario_liquido %}
+      <tr>
+        <td>SALARIO</td>
+        <td>{{item.salario_liquido}}</td>
+        <td>{{item.pg_salario|date:'M'}}</td>
+        <td>{{item.pg_salario|date:'Y'}}</td>
+      </tr>
+    {% endif %}
+  {% endfor %}
+  <!-- fgts -->
+  {% for item in folha %}
+    {% if item.fgts %}
+      <tr>
+        <td>FGTS</td>
+        <td>{{item.fgts}}</td>
+        <td>{{item.pg_salario|date:'M'}}</td>
+        <td>{{item.pg_salario|date:'Y'}}</td>
+      </tr>
+    {% endif %}
+  {% endfor %}
+  <!-- vt -->
+  {% for item in folha %}
+    {% if item.vt %}
+      <tr>
+        <td>VT</td>
+        <td>{{item.vt}}</td>
+        <td>{{item.pg_va_vt|date:'M'}}</td>
+        <td>{{item.pg_va_vt|date:'Y'}}</td>
+      </tr>
+    {% endif %}
+  {% endfor %}
+  <!-- va -->
+  {% for item in folha %}
+    {% if item.va %}
+      <tr>
+        <td>VA</td>
+        <td>{{item.va}}</td>
+        <td>{{item.pg_va_vt|date:'M'}}</td>
+        <td>{{item.pg_va_vt|date:'Y'}}</td>
+      </tr>
+    {% endif %}
+  {% endfor %}
+  <!-- Produtos -->
+  {% for item in compras %}
+    {% if item.total %}
+      <tr>
+        <td>PRODUTOS</td>
+        <td>{{item.total}}</td>
+        <td>{{item.vencimento|date:'M'}}</td>
+        <td>{{item.vencimento|date:'Y'}}</td>
+      </tr>
+    {% endif %}
+  {% endfor %}
+  <!-- Custos Extras -->
+  {% for item in custos_ex %}
+    {% if item.total %}
+      <tr>
+        <td>{{item.referencia}}</td>
+        <td>{{item.total}}</td>
+        <td>{{item.vencimento|date:'M'}}</td>
+        <td>{{item.vencimento|date:'Y'}}</td>
+      </tr>
+    {% endif %}
+  {% endfor %}
+</table>
+
+{% endblock %}

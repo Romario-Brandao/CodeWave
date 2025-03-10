@@ -1,0 +1,212 @@
+{% extends 'base.html' %} {% load static %} {% block body %}
+
+<div class="body_caixa">
+  <div class="cabecalho">
+    <h1 style="text-align: center; margin-left: 600px; color: black">CAIXA COMPRAS</h1>
+  </div>
+  <hr>
+  <div style="display: flex;">
+    <div>
+      <form method="POST" action="{% url 'caixa_compra' %}">
+        {% csrf_token %}
+        <div class="barra_pesquisa">
+          <div class="caixas_barra_pesquisa espacamento_compra">
+            <h4 class="nome_caixa_item">Nº CAIXA:</h4>
+            <h4 class="caixa1">{{ n_caixa }}</h4>
+            <input type="hidden" name="n_caixa" value="{{ n_caixa }}">
+          </div>
+          <div>
+            <div class="tamanho_cod_produto3">
+              <h4 class="nome_caixa_item tamanho_cod_produto2">COD PRODUTO</h4>
+              <input class="caixa2 tamanho_cod_produto" name="cod_produto" onchange="this.form.submit()" {% if not cod_produto %} autofocus {% endif %} oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+            </div>
+          </div>
+          <div class="caixas_barra_pesquisa">
+            <h4 class="nome_caixa_item">BARRA DE PESQUISA</h4>
+            <select class="caixa1" name="id_produto">
+              <option value="">---</option>
+              {% for item in produtos %}
+                <option value="{{ item.id }}" {% if cod_produto == item.id|stringformat:"s" %} selected {% endif %}>{{item.id}} - {{ item.nome }} - {% if item.marca.nome != "NÃO CADASTRADO" %} {{ item.marca.nome }} - {% endif %}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="caixas_barra_pesquisa">
+            <h4 class="nome_caixa_item">QUANTIDADE</4>
+              <input class="caixa2" value="1" name="quantidade" {% if cod_produto %} autofocus {% endif %} oninput="this.value=this.value.replace(/[^0-9,]/g,'')" required'>
+          </div>
+          <div class="caixas_barra_pesquisa">
+            <h4 class="nome_caixa_item">VALOR UNITARIO</h4>
+            <input type="text" class="caixa2" name="valor_uni" min="0" oninput="this.value=this.value.replace(/[^0-9,]/g,'')" required>
+          </div>
+          <div class="caixa_botoes">
+            <input class="butao_servico" type="submit" name="acao" value="Lançar Produto">
+          </div>
+        </div>
+      </form>
+    </div>
+
+  </div>
+  <hr>
+
+  <div class="tela_principal">
+    <div>
+      <div style="display: flex; padding: 0 50px 0 0;">
+        <div>
+          <img src="static/imagens/logo.jpeg" width="300px" style="margin: 20px 0 0 10px;">
+        </div>
+        <div class="resumo_caixa">
+          <h4 class="titulos_lista_produtos">LISTA DE PRODUTOS</h4>
+          <div class="table-container">
+            <table class="table-fixa">
+              <thead>
+                <tr>
+                  <th>N item</th>
+                  <th>Cód Produto</th>
+                  <th>Nome do Produto</th>
+                  <th>Valor Unitario</th>
+                  <th>Quantidade</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for item in caixa_produto %}
+                <tr>
+                  <td>{{ forloop.counter }}</td>
+                  <td>{{ item.produto.cod_produto }}</td>
+                  <td>{{ item.produto.nome }} {% if item.produto.marca.nome  != 'NÃO CADASTRADO' %} {{ item.produto.marca.nome }} {% endif %}</td>
+                  <td>{{ item.produto.preco_venda }}</td>
+                  <td>{{ item.quantidade }}</td>
+                  <td>{{ item.total }}</td>
+                </tr>
+                {% endfor %}
+                <tr>
+                  <td colspan="4"></td>
+                  <td align="right"><strong>Total:</strong></td>
+                  <td align="right">R$ {{ total_caixa_produto }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div>
+          <form method="POST" action="{% url 'caixa_compra' %}">
+            {% csrf_token %}
+            <div class="caixas_barra_pesquisa_excuir">
+              <h4 class="nome_caixa_item nome_caixa_item2">Nº item</4>
+              <input class="caixa2 input_caixa_item2" name="excluir_produto">
+              <input type="hidden" name="n_caixa" value="{{ n_caixa }}" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+            </div>
+            <div>
+              <input type="submit" name="acao" value="Excluir Produto" class="finalizar_compra butao_excluir_servico">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Parcelas -->
+  <div class="cabecalho">
+    <h1 style="text-align: center; margin-left: 600px; color: black;">LANÇAR PARCELAS</h1>
+  </div>
+  <br>
+  <form method="POST" action="{% url 'caixa_compra' %}">
+    {% csrf_token %}
+    <input type="hidden" name="n_caixa" value="{{ n_caixa }}">
+    <div>
+      <div style="display: flex;">
+        <div class="caixas_barra_pesquisa_total">
+          <h4 class="nome_caixa_item_parcelas">Quantidades de parcelas:</h4>
+          <input class="caixa2_parcelas" type="text" {% if auto_focus_parcela %} autofocus {% endif %}
+            name="quant_parcelas" value="{{quant_parcelas}}" onchange="this.form.submit()">
+        </div>
+        <div class="caixas_barra_pesquisa_total">
+          <h4 class="nome_caixa_item_parcelas">T.G:</h4>
+          <input class="caixa2_parcelas" readonly type="text" name="tg" value="R$ {{tg}}">
+        </div>
+        <div class="caixas_barra_pesquisa_total">
+          <h4 class="nome_caixa_item_parcelas">SALDO:</h4>
+          <input class="caixa2_parcelas" readonly type="text" name="saldo" value="R$ {{saldo}}">
+        </div>
+        <div class="caixas_barra_pesquisa_total">
+          <input type="submit" class="button_fechamento" name="acao" value="Fechar Serviço / Venda">
+        </div>
+      </div>
+      <div style="display: flex;">
+        <div class="caixas_barra_pesquisa_total">
+          <h4 class="nome_caixa_item_parcelas">Forma de pagamento:</h4>
+          <select name="forma_pg" class="caixa4">
+            <option value="">---</option>
+            <option value="boleto">Boleto</option>
+            <option value="credito">C.Crédito</option>
+            <option value="debito">C.Débito</option>
+            <option value="dinheiro">Dinheiro</option>
+            <option value="pix">PIX / Transferência</option>
+          </select>
+        </div>
+
+        <div class="caixas_barra_pesquisa_total">
+          <h4 class="nome_caixa_item_parcelas">Fornecedor:</h4>
+          <select class="caixa4" name="fornecedor">
+            <option value="">---</option>
+            {% for item in fornecedores %}
+            <option value="{{item.id}}">{{ item.nome }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="caixa_item_3">
+          <h4 class="nome_caixa_item">NF</h4>
+          <input type="number" class="caixa2" name="nf">
+        </div>
+        <div class="caixa_item_3">
+          <h4 class="nome_caixa_item">DATA DA COMPRA</h4>
+          <input type="date" class="caixa_data" name="data_compra">
+        </div>
+        <div class="caixa_item_3">
+          <h4 class="nome_caixa_item">DATA DA CHEGADA</h4>
+          <input type="date" class="caixa_data" name="data_chegada">
+        </div>
+        <div class="caixa_item_3">
+          <h4 class="nome_caixa_item">FRETE</h4>
+          <select class="caixa1" name="frete">
+            <option>RET</option>
+            <option>CIF</option>
+            <option>FOB</option>
+          </select>
+        </div>
+      </div>
+
+      {% for parcela in quant_parcelas2 %}
+      <hr style="width: 50%; background-color: yellow; border: none; margin-left: 20px; height: 0.08px;">
+
+      <div style="display: flex;">
+        <div class="caixas_barra_pesquisa_total">
+          <h4 class="nome_caixa_item_parcelas">Parcela:</h4>
+          <input class="caixa2_parcelas" readonly type="text" name="parcela_{{ forloop.counter }}"
+            value="{{parcela}} / {{quant_parcelas}}">
+        </div>
+
+        <div class="caixas_barra_pesquisa_total">
+          <h4 class="nome_caixa_item_parcelas">Valor:</h4>
+          <input class="caixa2_parcelas" name="valor_{{ forloop.counter }}" type="text" value="{{ valor_parcela }}">
+        </div>
+        <div class="caixas_barra_pesquisa_total">
+          <h4 class="nome_caixa_item_parcelas">Vencimento:</h4>
+          <input class="caixa2_parcelas caixa3_parcelas" name="vencimento_{{ forloop.counter }}" type="date"
+            name="vencimento_{{ forloop.counter}}">
+        </div>
+        <div class="caixas_barra_pesquisa_total">
+          <h4 class="nome_caixa_item_parcelas">OBS:</h4>
+          <input class="caixa2_parcelas" type="text" name="obs_{{ forloop.counter }}"
+            name="obs_{{ forloop.counter }}">
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </form>
+
+</div>
+
+</div>
+
+{% endblock %}

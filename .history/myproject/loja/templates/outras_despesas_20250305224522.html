@@ -1,0 +1,202 @@
+{% extends 'base.html' %} {% load static %} {% block body %}
+
+<div class="form_fornecedor" style="width: 85%;">
+  <h1>Custos Extras</h1>
+  <div class="div_pai_custos_extras">
+      <form method="POST" action="{% url 'outras_despesas' %}">
+      {% csrf_token %}
+        <div style="display: flex;">
+          <div class="caixas_barra_pesquisa_total tamanho_cod_produto3">
+            <h4 class="nome_caixa_item tamanho_cod_produto2">Nº Caixa:</h4>
+            <input class="caixa2 tamanho_cod_produto" name="n_servico" value='{{ n_servico }}' readonly>
+          </div>
+          
+          <div class="caixas_barra_pesquisa_total" style="margin-left:-30px ;">
+            <h4 class="nome_caixa_item_parcelas">Fornecedor:</h4>
+            <select name="fornecedor" class="caixa4" required>
+              <option value="">---</option>
+              {% for item in fornecedores %}
+              <option value="{{item.id}}" {% if item.id == fornecedor.id %} selected {% endif %}>{{item.nome}}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="caixas_barra_pesquisa_total">
+            <h4 class="nome_caixa_item_parcelas">Referência:</h4>
+            <select name="referencia" class="caixa4" required>
+              <option {% if referencia == "" %} selected {% endif %} value="">---</option>
+              <option {% if referencia == "AGUA" %} selected {% endif %} value="AGUA">Água</option>
+              <option {% if referencia == "ALUGUEL" %} selected {% endif %} value="ALUGUEL">Aluguel</option>
+              <option {% if referencia == "CONTADOR" %} selected {% endif %} value="CONTADOR">Contador</option>
+              <option {% if referencia == "EMPRESTIMO" %} selected {% endif %} value="EMPRESTIMO">Emprestimo</option>
+              <option {% if referencia == "ENERGIA" %} selected {% endif %} value="ENERGIA">Energia</option>
+              <option {% if referencia == "INTERNET" %} selected {% endif %} value="INTERNET">Internet</option>
+              <option {% if referencia == "SISTEMA ERP" %} selected {% endif %} value="SISTEMA ERP">Sistema ERP</option>
+              <!-- <option value="ENERGIA"></option> -->
+            </select>
+          </div>
+          <div class="caixas_barra_pesquisa_total">
+            <h4 class="nome_caixa_item_parcelas">Forma de pagamento:</h4>
+            <select name="forma_pg" class="caixa4" required>
+              <option {% if forma_pg == '' %} selected {% endif %} value="">---</option>
+              <option {% if forma_pg == 'BOLETO' %} selected {% endif %} value="BOLETO">Boleto</option>
+              <option {% if forma_pg == 'C.CREDITO' %} selected {% endif %} value="C.CREDITO">C.Crédito</option>
+              <option {% if forma_pg == 'C.DEBITO' %} selected {% endif %} value="C.DEBITO">C.Débito</option>
+              <option {% if forma_pg == 'DINHEIRO' %} selected {% endif %} value="DINHEIRO">Dinheiro</option>
+              <option {% if forma_pg == 'PIX / TRANSFERENCIA' %} selected {% endif %} value="PIX / TRANSFERENCIA">PIX / Transferência</option>
+            </select>
+          </div>
+          <div class="caixas_barra_pesquisa_total">
+            <h4 class="nome_caixa_item_parcelas">Valor:</h4>
+            <input class="caixa2_parcelas" required name="valor" type="text" value="{{ valor }}" oninput="this.value=this.value.replace(/[^0-9,]/g, '').replace(/(,.*?)(,.*)/, '$1').replace(/(\d+),(\d{2})(\d.*)/, '$1,$2')">
+          </div>
+          <div class="caixas_barra_pesquisa_total">
+            <h4 class="nome_caixa_item_parcelas">Quantidade parcelas:</h4>
+            <input class="caixa2_parcelas" type="text" {% if auto_focus_parcela %} autofocus {% endif %}
+              name="quant_parcelas" value="{{quant_parcelas}}" onchange="this.form.submit()" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+          </div>
+          <div style="margin: 0 10px 0 30px;">
+            <input class="butao_servico" type="submit" name="acao" value="Lançar Custo">
+          </div>
+        </div>
+        <div style="display: flex;flex-direction: column;">
+          {% for parcela in quant_parcelas2 %}
+          <div style="width: 100%;">
+            <hr class="hr_parcela">
+            <div style="display: flex;">
+              <div class="caixas_barra_pesquisa_total">
+                <h4 class="nome_caixa_item_parcelas">Parcela:</h4>
+                <input class="caixa2_parcelas" readonly type="text" name="parcela_{{ forloop.counter }}"
+                  value="{{parcela}} / {{quant_parcelas}}">
+              </div>
+
+              <div class="caixas_barra_pesquisa_total">
+                <h4 class="nome_caixa_item_parcelas">Valor:</h4>
+                <input class="caixa2_parcelas" required name="valor_{{ forloop.counter }}" type="text" value="{{ valor }}" oninput="this.value=this.value.replace(/[^0-9,]/g, '').replace(/(,.*?)(,.*)/, '$1').replace(/(\d+),(\d{2})(\d.*)/, '$1,$2')">
+              </div>
+              <div class="caixas_barra_pesquisa_total">
+                <h4 class="nome_caixa_item_parcelas">Vencimento:</h4>
+                <input class="caixa2_parcelas widht_data" required name="vencimento_{{ forloop.counter }}" type="date">
+              </div>
+              <div class="caixas_barra_pesquisa_total">
+                <h4 class="nome_caixa_item_parcelas">OBS:</h4>
+                <input class="caixa2_parcelas" type="text" name="obs_{{ forloop.counter }}">
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </form>  
+      </div>
+      <hr>
+      <br>
+      <form method="POST" action="{% url 'outras_despesas' %}">
+        {% csrf_token %}
+
+        <div style="background-color: aliceblue;border-radius: 7px; margin: 0 2px 0 2px; padding: 5px 0 5px 0;">
+          <div style="display: flex; justify-content: space-between; width: 100%">
+            <div style="display: flex;">
+              <div class="bloco_filtro">
+                <div class="itens_bloco_filtro">
+                  <h4>Títulos Pagos</h4>
+                  <label for="sim">Sim</label>
+                  <input type="radio" name="titulos_pg" value="sim" onchange="this.form.submit()" {% if filtro == 'sim' %} checked {% endif %} />
+                  <label for="nao">Não</label>
+                  <input type="radio" name="titulos_pg" value="nao" onchange="this.form.submit()" {% if filtro == 'nao' %} checked {% endif %} />
+                  <label for="todos">Todos</label>
+                  <input type="radio" name="titulos_pg" value="todos" onchange="this.form.submit()" {% if filtro == 'todos' %} checked {% endif %} />
+                </div>
+              </div>
+              <div class="bloco_filtro">
+                <div class="itens_bloco_filtro">
+                  <h4>Ordenar Por:</h4>
+                  <select name="ordenar_por" onchange="this.form.submit()">
+                    <option value="id" {% if ordenar_por == 'id' %} selected {% endif %}>ID</option>
+                    <option value="fornecedor" {% if ordenar_por == 'fornecedor' %} selected {% endif %}>Fornecedor</option>
+                    <option value="referencia" {% if ordenar_por == 'referencia' %} selected {% endif %}>Referencia
+                    </option>
+                    <option value="forma_pg" {% if ordenar_por == 'forma_pg' %} selected {% endif %}>Forma de Pagamento</option>
+                    <option value="vencimento" {% if ordenar_por == 'vencimento' %} selected {% endif %}>Vencimento</option>
+                    <option value="data_pg" {% if ordenar_por == 'data_pg' %} selected {% endif %}>Pagamento</option>
+                    <option value="valor" {% if ordenar_por == 'valor' %} selected {% endif %}>Total</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div style="display: flex;justify-content: flex-end;">
+              <div class="caixas_barra_pesquisa_total">
+                <h4 class="nome_caixa_item_parcelas">Pagamento:</h4>
+                <input class="caixa2_parcelas widht_data" required name="pagamento" type="date">
+              </div>
+              <div style="margin: 0 10px 0 20px;">
+                <input class="butao_servico" type="submit" name="acao" value="Lançar Pagamento">
+              </div>
+              <div style="margin: 0 10px 0 0;">
+                <input class="butao_servico" type="submit" name="acao" value="Excluir">
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div style="text-align: right;">
+            <label>Total</label>
+            <label class="resumo_contas_pag_rec">R$ {{ total_custo|floatformat:2 }}</label>
+            <label>Quantidade</label>
+            <label class="resumo_contas_pag_rec">{{ quant_custos }}</label>
+            <label>Desconto</label>
+            <label class="resumo_contas_pag_rec">R$ {{ desconto_geral|floatformat:2 }}</label>
+            <label>Acrescimo</label>
+            <label class="resumo_contas_pag_rec">R$ {{ acrescimo_geral|floatformat:2 }}</label>
+          </div>
+          <hr />
+          <table>
+            <thead>
+              <tr>
+                <td></td>
+                <td>Fornecedor</td>
+                <td>Referência</td>
+                <td>Parcela</td>
+                <td>Forma de Pagamento</td>
+                <td>Valor</td>
+                <td>Acrescimo</td>
+                <td>Desconto</td>
+                <td>Total</td>
+                <td>Vencimento</td>
+                <td>Pagamento</td>
+                <td>Obs</td>
+              </tr>
+            </thead>
+            <tbody>
+              {% for item in custos %}
+              <tr>
+                <th><input type="checkbox" name="custo{{ item.id }}" value={{item.id}} class="selecionar"></th>
+                <td>{{item.fornecedor.nome}}</td>
+                <td>{{item.referencia}}</td>
+                <td>{{item.parcela}}</td>
+                <td>{{item.forma_pg}}</td>
+                <td>{{item.valor}}</td>
+                {% if item.acrescimo == 0 %}
+                  <td><input name="acrescimo{{item.id}}" value="0"></td>
+                {% else %}
+                  <td>{{item.acrescimo|floatformat:2}}</td>
+                {% endif %}
+                {% if item.desconto == 0 %}
+                  <td><input name="desconto{{item.id}}" value="0"></td>
+                {% else %}
+                  <td>{{item.desconto|floatformat:2}}</td>
+                {% endif %}
+                <td>{{item.total}}</td>
+                <td>{{item.vencimento|date:'d/m/Y'}}</td>
+                <td>{{item.pagamento|date:'d/m/Y'}}</td>
+                <td>{{item.obs}}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </form>
+      <br><br>
+    </div>
+  </div>
+
+
+
+
+{% endblock %}

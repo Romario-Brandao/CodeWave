@@ -1,0 +1,17 @@
+{% extends 'base.html' %} {% load static %} {% block body %}
+
+<div class="form_fornecedor">
+  <h1>Custos Extras</h1>
+  <div class="caixas_barra_pesquisa">
+    <h4 class="nome_caixa_item">Fornecedor:</4>
+    <select>
+      {% for item in fornecedores %}
+        <option class="caixa2" autofocus name="fornecedor" value="{{item.id}}">{{item.nome}}</option>
+      {% endfor %}
+    </select>
+      <!-- <input class="caixa2" name="quantidade" value="1" {% if cod_produto %} autofocus {% endif %} oninput="this.value = this.value.replace(/[^0-9,]/g, '').replace(/(,.*),/g, '$1');"> -->
+  </div>
+</div>
+
+
+{% endblock %}

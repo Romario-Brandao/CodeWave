@@ -1,0 +1,38 @@
+{% extends 'base.html' %} {% load static %} {% block body %}
+
+<!-- <div class="div_centralizada_geral"> -->
+<div class="form_fornecedor form_fornecedor_relatorio">
+    <h1>Relatório de Fornecedores</h1>
+    <hr style="width: 90%; background-color: black; margin: 0 0 30px 0;">
+    <table>
+        <thead>
+          <tr>
+            <th class="cabec_rel_prod">ID</th>
+            <th class="cabec_rel_prod">Fornecedor</th>
+            <th class="cabec_rel_prod">CNPJ / CPF</th>
+            <th class="cabec_rel_prod">Telefone</th>
+            <th class="cabec_rel_prod">Whatsapp</th>
+            <th class="cabec_rel_prod">Email</th>
+            <th class="cabec_rel_prod">Data de Cadastro</th>
+            <th class="cabec_rel_prod">Faturamento</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in fornecedor_info %}
+          <tr>
+            <td class="font_rel_est">{{ item.fornecedor.id }}</td>
+            <td class="font_rel_est">{{ item.fornecedor.nome }}</td>
+            <td class="font_rel_est">
+              <a href="{% url 'compra_por_fornecedor' item.fornecedor.cpf_cnpj %}">{{ item.fornecedor.cpf_cnpj }}</a>
+            </td>
+            <td class="font_rel_est">{{ item.fornecedor.telefone }}</td>
+            <td class="font_rel_est">{{ item.fornecedor.whatsapp }}</td>
+            <td class="font_rel_est">{{ item.fornecedor.email }}</td>
+            <td class="font_rel_est">{{ item.fornecedor.data_cadastro }}</td>
+            <td class="font_rel_est">{{ item.faturamento }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+</div>
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends 'base.html' %} {% load static %} {% block body %}
+
+<h1>Controle de Estoque</h1>
+<form method="POST" action="{% url 'controle_estoque' %}" onsubmit="return preventMultipleSubmissions(this);">
+  {% csrf_token %}
+  <h4>Ordenar Por:</h4>
+  <select name="ordenar_por" onchange="this.form.submit()">
+    <option value="id" {% if ordenar_por == 'id' %} selected {% endif %}>ID</option>
+    <option value="produto" {% if ordenar_por == 'produto' %} selected {% endif %}>Produto</option>
+    <option value="marca" {% if ordenar_por == 'marca' %} selected {% endif %}>Marca</option>
+    <option value="categoria" {% if ordenar_por == 'categoria' %} selected {% endif %}>Categoria</option>
+    <option value="estoque" {% if ordenar_por == 'estoque' %} selected {% endif %}>Estoque</option>
+    <option value="quant_compra" {% if ordenar_por == 'quant_compra' %} selected {% endif %}>Total Compras</option>
+    <option value="quant_venda" {% if ordenar_por == 'quant_venda' %} selected {% endif %}>Total Vendas</option>
+    <option value="lucro" {% if ordenar_por == 'lucro' %} selected {% endif %}>R$ Lucro</option>
+    <option value="porc_lucro" {% if ordenar_por == 'porc_lucro' %} selected {% endif %}>% Lucro</option>
+    <option value="porc_venda_do_item" {% if ordenar_por == 'porc_venda_do_item' %} selected {% endif %}>% Vendas</option>
+    <option value="porc_valor_venda_do_produto" {% if ordenar_por == 'porc_valor_venda_do_produto' %} selected {% endif %}>% Lucro Geral</option>
+    <option value="data_ult_venda" {% if ordenar_por == 'data_ult_venda' %} selected {% endif %}>Data da Ultima Venda
+    </option>
+    <option value="quant_vend_ult_dias" {% if ordenar_por == 'quant_vend_ult_dias' %} selected {% endif %}>Quantidade De
+      vendas Ult</option>
+  </select>
+  <hr>
+  <table>
+    <thead>
+      <tr>
+        <th class="cabec_rel_prod">ID</th>
+        <th class="cabec_rel_prod">Produto</th>
+        <th class="cabec_rel_prod">Marca</th>
+        <th class="cabec_rel_prod">Categoria</th>
+        <th class="cabec_rel_prod">Estoque</th>
+        <th class="cabec_rel_prod">Compras</th>
+        <th class="cabec_rel_prod">Vendas</th>
+        <th class="cabec_rel_prod">R$ Lucro</th>
+        <th class="cabec_rel_prod">% Lucro</th>
+        <th class="cabec_rel_prod">% Vendas</th>
+        <th class="cabec_rel_prod">% L. Geral</th>
+        <th class="cabec_rel_prod">Última Venda</th>
+        <th class="cabec_rel_prod">
+          <select class="quant_vend_ult_d" name="quant_vend_ult_dias" onchange="this.form.submit()">
+            <option value="7" {% if dias == '7' %} selected {% endif %}>Quant Vendidas 7D</option>
+            <option value="15" {% if dias == '15' %} selected {% endif %}>Quant Vendidas 15D</option>
+            <option value="30" {% if dias == '30' %} selected {% endif %}>Quant Vendidas 30D</option>
+          </select>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in relatorio %}
+      <tr>
+        <td class="font_rel_est">{{ item.id }}</td>
+        <td class="font_rel_est">{{ item.produto }}</td>
+        <td class="font_rel_est">{{ item.marca }}</td>
+        <td class="font_rel_est">{{ item.categoria }}</td>
+        <td class="font_rel_est">{{ item.estoque }}</td>
+        <td class="font_rel_est">{{ item.quant_compra|floatformat:0 }}</td>
+        <td class="font_rel_est">{{ item.quant_venda|floatformat:0 }}</td>
+        <td class="font_rel_est">{{ item.lucro|floatformat:2 }}</td>
+        <td class="font_rel_est">{{ item.porc_lucro|floatformat:2 }}%</td>
+        <td class="font_rel_est">{{ item.porc_venda_do_item|floatformat:2 }}%</td>
+        <td class="font_rel_est">{{ item.porc_valor_venda_do_produto|floatformat:2 }}%</td>
+        <td class="font_rel_est">{{ item.data_ult_venda }}</td>
+        <td class="font_rel_est">{{ item.quant_vend_ult_dias|floatformat:0 }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</form>
+
+{% endblock %}

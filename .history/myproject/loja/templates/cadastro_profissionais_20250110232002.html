@@ -1,0 +1,114 @@
+{% extends 'base.html' %} {% load static %} {% block body %}
+
+<!-- <div class="div_centralizada_geral"> -->
+<div class="form_fornecedor">
+    <h1>Cadastro do Funcionario</h1>
+    <hr style="width: 90%; background-color: black; margin: 0 0 30px 0;">
+        <form method="POST" action="{% url 'cadastro_profissionais' %}" class="form">
+            {% csrf_token %}
+            <table class="table_fornecedor">
+                <tr>
+                  <td>
+                    <label class="label_for" for="cnpj">CPF:</label>
+                  </td>
+                  <td>
+                    <input type="text" id="cpf" value="{{ cnpj }}" name="cnpj" maxlength="11" class="input_cad_cli_for" onchange="this.form.submit()" autofocus required/>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label class="label_for" for="nome">Nome:</label>
+                  </td>
+                  <td>
+                    <input type="text" id="nome" name="nome" class="input_cad_cli_for" required value="{{ nome }}"/>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label class="label_for" for="endereco">Endereço:</label>
+                  </td>
+                  <td>
+                    <textarea id="endereco" name="endereco" rows="2" class="input_cad_cli_for" required>{{ endereco }}</textarea>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label class="label_for" for="telefone">Telefone:</label>
+                  </td>
+                  <td>
+                    <input type="text" id="telefone" name="telefone" class="input_cad_cli_for" value="{{ telefone }}"/>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label class="label_for" for="whatsapp">Whatsapp:</label>
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      id="whatsapp"
+                      name="whatsapp"
+                      class="input_cad_cli_for"
+                      value="{{ whatsapp }}"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label class="label_for" for="email">E-mail:</label>
+                  </td>
+                  <td>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      class="input_cad_cli_for"
+                      value="{{ email }}"
+                    />
+                  </td>
+                </tr>
+              </table>
+              <input
+                name="cadastrar"
+                class="btn_submit_for"
+                type="submit"
+                value="Cadastrar"
+              />
+            <!-- <div class="div1" >
+                <label class="label1">CPF:</label>
+                <input class="input1" value="{{ cpf }}" name="cpf" type="text" id="cpf" autofocus onchange="this.form.submit()" placeholder="Digite o CPF" maxlength="11" oninput="this.value=this.value.replace(/[^0-9]/g,'')" required>
+            </div>
+            <div class="div1" >
+                <label class="label1">Nome:</label>
+                <input class="input1" value="{{ nome }}" name="nome" type="text" placeholder="Nome do Funcionario" required>
+            </div>
+            <div class="div1" >
+                <label class="label1">Cargo:</label>
+                <select class="cargo" name="cargo">
+                    <option value="1">---</option>
+                    {% for item in cargos %}
+                    <option value="{{item.id}}" {% if item.id == cargo.id %} selected {% endif %}>{{ item.nome }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="div1" >
+                <label class="label1">Telefone:</label>
+                <input class="input1" value="{{telefone}}" name = "telefone" type="text" maxlength="15" oninput="applyPhoneMask(this)" placeholder="(00) 0 0000-0000" required>
+            </div>
+            <div class="div1" >
+                <label class="label1">Whatsapp</label>
+                <input class="input1" value="{{whatsapp}}" name="whatsapp" type="text" maxlength="15" oninput="applyPhoneMask(this)" placeholder="(00) 0 0000-0000" required>
+            </div>
+            <div class="div1" >
+                <label class="label1">Email:</label>
+                <input class="input1" value="{{email}}" name="email" type="email" placeholder="Digite o Email do Funcionario" required>
+            </div>
+            <div class="div1" >
+                <label class="label1">Obs:</label>
+                <input class="input1" value="{{obs}}" name="obs" type="text" placeholder="OBS">
+            </div>
+            <button type="submit" name="cadastrar" value="cadastrar_alterar">Gravar</button> -->
+        </form>
+</div>
+
+{% endblock %}

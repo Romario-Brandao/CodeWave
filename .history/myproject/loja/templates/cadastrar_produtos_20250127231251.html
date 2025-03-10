@@ -1,0 +1,82 @@
+{% extends 'base.html' %} {% load static %} {% block body %}
+
+<h1>Cadastro de Produtos</h1>
+<hr>
+
+<form method="POST" action="{% url 'cadastrar_produtos' %}" enctype="multipart/form-data" onsubmit="return preventMultipleSubmissions(this);">
+  {% csrf_token %}
+  <label>Cod:</label>
+  <input type="text" autofocus onchange="this.form.submit()" name="id_produto" {% if id %} value="{{ id }}" {% else %}
+    value="{{ max_id }}" {% endif %} />
+  <label>Prox Cod: {{ max_id }}</label>
+  <input type="file" id="imagem" name="imagem" accept="image/*" />
+  <hr />
+  {% if produto.imagem %}
+  <img name="imagem_atual" src="{{ produto.imagem.url }}" alt="{{ produto.nome }}" width="300px">
+  {% else %}
+  <p>Sem Imagem Cadastrada</p>
+  {% endif %}
+
+  <table>
+    <tbody>
+      <tr class="tr_cad_produtos">
+        <td style="text-align: right;">Produto: <input name="nome" value="{{ produto.nome }}" /></td>
+        <td style="text-align: right;">Categoria:
+          <select name="categoria">
+            <option value="1">---</option>
+            {% for item in categorias %}
+            <option value="{{ item.id }}" {% if produto.categoria and produto.categoria.id == item.id %} selected {% endif %}>
+              {{ item.nome }}
+            </option>
+            {% endfor %}
+          </select>
+        </td>
+        <td style="text-align: right;">
+          Marca:
+          <select name="marca">
+            <option value="1">---</option>
+            {% for item in marcas %}
+            <option value="{{item.id}}" {% if produto.marca and produto.marca.id == item.id %} selected {% endif %}>{{ item.nome }}
+            </option>
+            {% endfor %}
+          </select>
+        </td>
+        <td style="text-align: right;">
+          Descrição:
+          <input name="descricao" style="width: 500px" value="{{ produto.descricao }}" />
+        </td>
+        </td>
+      <tr class="tr_cad_produtos">
+        <td style="text-align: right;">Preço: <input name="preco" value="{{ produto.preco_venda|floatformat:2 }}"></td>
+        <td style="text-align: right;">Estoque: <input style="width: 133px" value="{{ produto.estoque }}"></td>
+        <td style="text-align: right;">Data Cadastro: <input style="width: 80px"
+            value="{{ produto.data_cadastro|date:'d/m/Y' }}"></td>
+        <td style="text-align: right;">Obs: <input name="obs" style="width: 500px" value="{{produto.obs}}"></td>
+      </tr>
+      <tr class="tr_cad_produtos">
+        <td style="text-align: right;">Unid Med:
+          <select name="unidade_medida" style="width: 170px">
+            <option value="1">---</option>
+            {% for item in uni_medida %}
+            <option value='{{ item.id }}' {% if produto.unidade_medida and produto.unidade_medida.id == item.id %} selected {% endif %}>{{item.nome}}</option>
+            {% endfor %}
+          </select>
+        </td>
+        <td style="text-align: right;">Peso: <input name="peso" style="width: 130px"
+            value="{{ produto.peso|floatformat:2 }}"></td>
+        <td style="text-align: right;">Dimensões: <input name="dimensoes" style="width: 100px"
+            value="{{ produto.dimensoes }}"></td>
+        <td style="text-align: right;">Cod Barras: <input name="codigo_barras" style="width: 500px"
+            value="{{ produto.codigo_barras }}"></td>
+      </tr>
+      <tr class="tr_cad_produtos">
+        <td style="text-align: right;">Cadastrado Por: <input value="{{ produto.usuario }}"></td>
+      </tr>
+    </tbody>
+
+  </table>
+  <hr>
+  <button name="action" value="cadastrar_alterar" type="submit">Cadastrar / Alterar Produto</button>
+</form>
+
+{% endblock %}

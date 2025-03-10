@@ -1,0 +1,181 @@
+{% extends 'base.html' %} {% load static %} {% block body %}
+<script>
+  function formatarData(input) {
+    let valor = input.value.replace(/\D/g, ""); // Remove tudo que não é dígito
+    if (valor.length >= 2) {
+      valor = valor.substring(0, 2) + '/' + valor.substring(2);
+    }
+    if (valor.length >= 5) {
+      valor = valor.substring(0, 5) + '/' + valor.substring(5, 9);
+    }
+    input.value = valor;
+  }
+</script>
+<h1>Contas a Pagar</h1>
+<!-- <hr> -->
+<!-- <form method="POST" action="{% url 'contas_pagar' %}" onsubmit="return preventMultipleSubmissions(this);">
+  {% csrf_token %}
+  <table>
+    <tbody>
+      <tr>
+        <td class="td_contas">os:</td>
+        <td class="td_contas"><input value="{{ dados_caixa.os }}"></td>
+        <td class="td_contas">Fornecedor:</td>
+        <td class="td_contas"><input value="{{ dados_caixa.cliente }}"></td>
+        <td class="td_contas">PG:</td>
+        <td class="td_contas"><input value="{{ dados_caixa.forma_pg }}"></td>
+        <td class="td_contas">Parcela:</td>
+        <td class="td_contas"><input value="{{ dados_caixa.parcela }}"></td>
+        <td class="td_contas">Vencimento:</td>
+        <td class="td_contas"><input name="vencimento" type="date"
+          value="{{ dados_caixa.vencimento|date:'Y-m-d' }}" /></td>
+        <td class="td_contas">Pagamento:</td>
+        <td class="td_contas"><input name="data_pg" type="date" value="{{ dados_caixa.data_pg|date:'Y-m-d' }}" /></td>
+        <td class="td_contas">Obs:</td>
+        <td class="td_contas"><input name="obs" type="text" value="{{ dados_caixa.obs }}" style="width: 300px" /></td>
+      </tr>
+      <tr>
+        <td class="td_contas">Desconto:</td>
+        <td class="td_contas"><input name="desconto" type="number" value="{{ dados_caixa.desconto }}" min="0"
+          step="0.01" /></td>
+        <td class="td_contas">Acrescimo:</td>
+        <td class="td_contas"><input name="acrescimo" type="number" value="{{ dados_caixa.acrescimo }}" min="0"
+          step="0.01" /></td>
+        <td class="td_contas">Total:</td>
+        <td class="td_contas"><input name="total" type="number" value="{{ dados_caixa.valor }}" min="0" step="0.01" /></td>
+        <td><input type="submit" name="action" value="Alterar Dados"></td>
+      </tr>
+    </tbody>
+
+  </table>
+  <input name="parcela" type="hidden" value="{{ dados_caixa.parcela }}" />
+  <input name="os" type="hidden" value="{{ dados_caixa.os }}" />
+  <input name="idcaixa" type="hidden" value="{{ dados_caixa.id_caixa }}" />
+  <input name="titulos_pg" type="hidden" value="{{ filtro }}">
+  <input name="ordenar_por" type="hidden" value="{{ ordenar_por }}">
+  <input name="data_inicial" type="hidden" value="{{ periodo.data_inicial }}">
+  <input name="data_final" type="hidden" value="{{ periodo.data_final }}">
+</form> -->
+<hr style="border: 0;">
+<hr>
+
+ <form id="filtroForm" method="POST" action="{% url 'contas_pagar' %}" > <!--onsubmit="return preventMultipleSubmissions(this);" -->
+  {% csrf_token %}
+  <div style="display: flex;">
+    <div class="bloco_filtro">
+      <div class="itens_bloco_filtro">
+        <h4>Títulos Pagos</h4>
+        <label for="sim">Sim</label>
+        <input type="radio" name="titulos_pg" value="sim" onchange="this.form.submit()" {% if filtro == 'sim' %} checked {% endif %} />
+        <label for="nao">Não</label>
+        <input type="radio" name="titulos_pg" value="nao" onchange="this.form.submit()" {% if filtro == 'nao' %} checked {% endif %} />
+        <label for="todos">Todos</label>
+        <input type="radio" name="titulos_pg" value="todos" onchange="this.form.submit()" {% if filtro == 'todos' %} checked {% endif %} />
+      </div>
+    </div>
+    <div class="bloco_filtro">
+      <div class="itens_bloco_filtro">
+        <h4>Ordenar Por:</h4>
+        <select name="ordenar_por" onchange="this.form.submit()">
+          <option value="nf" {% if ordenar_por == 'nf' %} selected {% endif %}>NF</option>
+          <option value="fornecedor" {% if ordenar_por == 'fornecedor' %} selected {% endif %}>Fornecedor</option>
+          <option value="data_finalizacao" {% if ordenar_por == 'data_finalizacao' %} selected {% endif %}>Data da Venda
+          </option>
+          <option value="forma_pg" {% if ordenar_por == 'forma_pg' %} selected {% endif %}>Forma de Pagamento</option>
+          <option value="vencimento" {% if ordenar_por == 'vencimento' %} selected {% endif %}>Vencimento</option>
+          <option value="data_pg" {% if ordenar_por == 'data_pg' %} selected {% endif %}>Pagamento</option>
+          <option value="valor" {% if ordenar_por == 'valor' %} selected {% endif %}>Total</option>
+        </select>
+      </div>
+    </div>
+    <div class="bloco_filtro">
+      <div class="itens_bloco_filtro">
+        <h4>Período</h4>
+        <input type="text" id="data" name="data_inicial" value="{{ periodo.data_inicial }}" oninput="formatarData(this)"
+          maxlength="10" placeholder="dd / mm / aaaa">
+        <label>Até</label>
+        <input type="text" id="data" name="data_final" value="{{ periodo.data_final }}" oninput="formatarData(this)"
+          maxlength="10" placeholder="dd / mm / aaaa">
+        <button type="submit">Filtrar</button>
+      </div>
+    </div>
+  </div>
+</form>
+<form method="POST" action="{% url 'contas_pagar' %}">
+{% csrf_token %}
+  <div style="display: flex;justify-content: flex-end; margin-top: -100px;">
+    <div class="caixas_barra_pesquisa_total">
+      <h4 class="nome_caixa_item_parcelas" style="border: 1px solid black; color: black;">Pagamento:</h4>
+      <input class="caixa2_parcelas widht_data" required name="pagamento" type="date" style="border: 1px solid black;">
+    </div>
+    <div style="margin: 0 10px 0 20px;">
+      <input class="butao_servico" type="submit" name="acao" value="Lançar Pagamento">
+    </div>
+  </div>
+
+
+  <hr>
+  <div style="text-align: right;">
+    <label>Total</label>
+    <label class="resumo_contas_pag_rec">R$ {{ total_venda|floatformat:2 }}</label>
+    <label>Quantidade</label>
+    <label class="resumo_contas_pag_rec">{{ quant_venda }}</label>
+    <label>Desconto</label>
+    <label class="resumo_contas_pag_rec">R$ {{ desconto_geral|floatformat:2 }}</label>
+    <label>Acrescimo</label>
+    <label class="resumo_contas_pag_rec">R$ {{ acrescimo_geral|floatformat:2 }}</label>
+  </div>
+  <hr />
+
+  <table>
+    <thead>
+      <tr>
+        <th>NF</th>
+        <th>Cliente</th>
+        <th>Data Compra</th>
+        <th>Data Chegada</th>
+        <th>Frete</th>
+        <th>Forma de Pagamento</th>
+        <th>Parcela</th>
+        <th>Vencimento</th>
+        <th>Pagamento</th>
+        <th>Valor</th>
+        <th>Desconto</th>
+        <th>Acrescimo</th>
+        <th>Total</th>
+        <th>Obs</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in vendas %}
+      <tr>
+        <th><input type="checkbox" name="compra{{ item.id }}" value={{item.id}} class="selecionar">{{ item.nf }}</th>
+        <th>{{ item.cliente }}</th>
+        <th>{{ item.data_compra|date:"d/m/Y" }}</th>
+        <th>{{ item.data_chegada|date:"d/m/Y" }}</th>
+        <th>{{ item.frete }}</th>
+        <th>{{ item.forma_pg }}</th>
+        <th>{{ item.parcela }}</th>
+        <th>{{ item.vencimento|date:"d/m/Y" }}</th>
+        <th>{{ item.data_pg|date:"d/m/Y" }}</th>
+        <th>{{ item.valor }}</th>
+        {% if item.data_pg %}
+          <td>{{item.acrescimo|floatformat:2}}</td>
+          <td>{{item.desconto|floatformat:2}}</td>
+        {% else %}
+          <td><input style="width: 70px;" name="acrescimo{{item.id}}" value="0"></td>
+          <td><input style="width: 70px;" name="desconto{{item.id}}" value="0"></td>
+        {% endif %}
+        <th>{{ item.total }}</th>
+        {% if item.data_pg %}
+          <td>{{item.obs}}</td>
+        {% else %}            
+          <td><input style="width: 70px;" name="obs{{item.id}}"></td>
+        {% endif %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</form>
+
+{% endblock %}

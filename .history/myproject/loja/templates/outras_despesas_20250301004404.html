@@ -1,0 +1,13 @@
+{% extends 'base.html' %} {% load static %} {% block body %}
+
+<div class="form_fornecedor">
+  <h1>Custos Extras</h1>
+  <div class="caixas_barra_pesquisa">
+    <h4 class="nome_caixa_item">Nº Caixa:</h4>
+    <h4 class="caixa1">{{ n_servico }}</h4>
+    <input type="hidden" name="n_servico" value="{{ n_servico }}">
+  </div>
+</div>
+
+
+{% endblock %}

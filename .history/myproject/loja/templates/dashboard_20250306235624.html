@@ -1,0 +1,29 @@
+{% extends 'base.html' %} {% load static %} {% block body %}
+
+<h1>Dashboard</h1>
+
+<br>
+<hr>
+<table>
+  <thead>
+      <tr>
+          <th>Mês/Ano</th>
+          <th>QUANT</th>
+          <th>R$</th>
+      </tr>
+  </thead>
+  <tbody>
+      {% for item in resumo_vendas %}
+      <tr>
+          <td>{{ item.mes_ano }}</td>
+          <td>{{ item.quantidade }}</td>
+          <td>R$ {{ item.total|floatformat:2 }}</td>
+      </tr>
+      {% endfor %}
+  </tbody>
+</table>
+
+
+
+
+{% endblock %}

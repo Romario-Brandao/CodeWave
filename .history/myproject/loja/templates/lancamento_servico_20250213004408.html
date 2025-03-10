@@ -1,0 +1,514 @@
+{% extends 'base.html' %} {% load static %} {% block body %}
+
+
+<div class="body_caixa">
+  <div class="cabecalho">
+    <h1 style="text-align: center; margin-left: 600px; color: black;">CAIXA VENDA</h1>
+  </div>
+  <br>
+  <!-- LANÇAR PRODUTOS -->
+  <div>
+    <form method="POST" action="{% url 'servicos'%}" onsubmit="return preventMultipleSubmissions(this);">
+      {% csrf_token %}
+      <div class="barra_pesquisa">
+        <div class="caixas_barra_pesquisa">
+          <h4 class="nome_caixa_item">Nº Caixa:</h4>
+          <h4 class="caixa1">{{ n_servico }}</h4>
+          <input type="hidden" name="n_servico" value="{{ n_servico }}">
+        </div>
+        <div>
+          <div class="tamanho_cod_produto3">
+            <h4 class="nome_caixa_item tamanho_cod_produto2">Cod Produto</h4>
+            <input class="caixa2 tamanho_cod_produto" {% if not cod_produto and not cod_servico and auto_focus_parcela == False and autofocus_s2 == False %} autofocus {% endif %}
+              name="cod_produto" onchange="this.form.submit()" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+          </div>
+        </div>
+        <div class="caixas_barra_pesquisa">
+          <h4 class="nome_caixa_item">Barra de pesquisa:</h4>
+          <input type="text" id="buscarProduto" 
+            autocomplete="off" 
+            autocorrect="off" 
+            autocapitalize="off" 
+            spellcheck="false" 
+            placeholder="Digite o nome do produto..."
+            class="caixa2" onfocus="abrirSelect()">
+          <select id="listaProdutos" class="caixa1" name="id_produto" size="10">
+            <option value="">---</option>
+            {% for item in produtos %}
+                <option {% if cod_produto == item.id|stringformat:"s" %} selected {% endif %} value="{{ item.id }}">{{ item.id }} - {{ item.nome }} - {% if item.marca.nome != "NÃO CADASTRADO" %} {{ item.marca.nome }} {% endif %}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <!-- <div class="caixas_barra_pesquisa">
+          <h4 class="nome_caixa_item">Barra de Pesquisa</h4>
+          <select class="caixa1" name="id_produto">
+            <option value="">---</option>
+            {% for item in produtos %}
+              <option value="{{ item.id }}" {% if cod_produto == item.id|stringformat:"s" %} selected {% endif %}>
+                {{ item.id }} - {{ item.nome }}{% if not item.marca.id == 1 %} {{ item.marca.nome }}{% endif %} - R$ {{ item.preco_venda }}
+              </option>
+            {% endfor %}
+          </select> 
+        </div>-->
+        <div class="caixas_barra_pesquisa">
+          <h4 class="nome_caixa_item">Quantidade</4>
+            <input class="caixa2" name="quantidade" value="1" {% if cod_produto %} autofocus {% endif %} oninput="this.value = this.value.replace(/[^0-9,]/g, '').replace(/(,.*),/g, '$1');">
+        </div>
+        <div class="caixas_barra_pesquisa">
+          <h4 class="nome_caixa_item">Desconto</h4>
+          <input type="text" class="caixa2" name="desconto" value="0" step="0.01" min="0" oninput="this.value = this.value.replace(/[^0-9,]/g, '').replace(/(,.*),/g, '$1');">
+        </div>
+        <div class="caixa_botoes">
+          <input class="butao_servico" type="submit" name="acao" value="Lançar Produto">
+        </div>
+      </div>
+    </form>
+    <hr>
+  </div>
+  <div class="tela_principal">
+    <div>
+      <div style="display: flex; padding: 0 50px 0 0;">
+        <div>
+          <img src="static/imagens/logo.jpeg" width="300px" style="margin: 20px 0 0 10px;">
+        </div>
+        <div class="resumo_caixa">
+          <h4 class="titulos_lista_produtos">LISTA DE PRODUTOS</h4>
+          <div class="table-container">
+            <table class="table-fixa">
+              <thead>
+                <tr>
+                  <th>N item</th>
+                  <th>Cód Produto</th>
+                  <th>Nome do Produto</th>
+                  <th>Valor Unitario</th>
+                  <th>Quantidade</th>
+                  <th>Desconto</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for item in caixa_produto %}
+                <tr>
+                  <td>{{ forloop.counter }}</td>
+                  <td>{{ item.produto.cod_produto }}</td>
+                  <td>{{ item.produto.nome }} {% if item.produto.marca.nome  != 'NÃO CADASTRADO' %} {{ item.produto.marca.nome }} {% endif %}</td>
+                  <td>{{ item.produto.preco_venda }}</td>
+                  <td>{{ item.quantidade }}</td>
+                  <td>{{ item.desconto }}</td>
+                  <td>{{ item.total }}</td>
+                </tr>
+                {% endfor %}
+                <tr>
+                  <td colspan="5"></td>
+                  <td align="right"><strong>Total:</strong></td>
+                  <td align="right">R$ {{ total_caixa_produto }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div>
+          <form method="POST" action="{% url 'servicos' %}" onsubmit="return preventMultipleSubmissions(this);">
+            {% csrf_token %}
+            <div class="caixas_barra_pesquisa_excuir">
+              <h4 class="nome_caixa_item nome_caixa_item2">Nº item</4>
+              <input class="caixa2 input_caixa_item2" name="excluir_produto">
+              <input type="hidden" name="n_servico" value="{{ n_servico }}" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+            </div>
+            <div>
+              <input type="submit" name="acao" value="Excluir Produto" class="finalizar_compra butao_excluir_servico">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>  
+  <br><br><br>
+
+  <div class="cabecalho">
+    <h1 style="text-align: center; margin-left: 600px; color: black;">LANÇAR O.S</h1>
+  </div>
+  <br>
+  <!-- LANÇAR SERVIÇOS -->
+  <div>
+    <form method="POST" action="{% url 'servicos' %}" onsubmit="return preventMultipleSubmissions(this);" class="form-lancar-servico">
+      {% csrf_token %}
+      <input type="hidden" name="n_servico" value="{{ n_servico }}">
+      <div class="barra_pesquisa">
+        <div class="tamanho_cod_produto3">
+          <h4 class="nome_caixa_item tamanho_cod_produto2">Cod Serviço:</h4>
+          <input class="caixa2 tamanho_cod_produto" value="{{ cod_servico }}" onchange="this.form.submit()"
+            type="text" name="cod_servico" {% if autofocus_s2 == True %} autofocus {% endif %} oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+        </div>
+        <div class="caixas_barra_pesquisa">
+          <h4 class="nome_caixa_item">Serviço:</h4>
+          <input type="text" id="buscarServico" placeholder="Digite o serviço" class="caixa2" value=""
+                 autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+          <select class="caixa1" id="listaServicos" name="servico" size="10">
+              <option value="">---</option>
+              {% for item in servicos %}
+              <option {% if item.id|stringformat:"s" == cod_servico|stringformat:"s" %} selected {% endif %}
+                  value="{{ item.id }}"> {{ item.id }} {{ item.nome }} R$ {{ item.valor }}
+              </option>
+              {% endfor %}
+          </select>
+        </div>
+        <!-- <div class="caixas_barra_pesquisa">
+          <h4 class="nome_caixa_item">Serviço:</h4>
+          <select class="caixa1" name="servico">
+            <option value="">---</option>
+            {% for item in servicos %}
+            <option {% if item.id|stringformat:"s" == cod_servico|stringformat:"s" %} selected {% endif %}
+              value="{{ item.id }}"> {{ item.id }} {{ item.nome }} R$ {{ item.valor }}
+            </option>
+            {% endfor %}
+          </select>
+        </div> -->
+        <div class="caixas_barra_pesquisa">
+          <h4 class="nome_caixa_item">Acrescimo:</h4>
+          <input type="text" name="acrescimo" value="0" class="caixa2" 
+          {% if cod_servico %} autofocus {% endif %}
+          oninput="this.value = this.value.replace(/[^0-9,]/g, '').replace(/(,.*),/g, '$1');">
+        </div>
+        <div class="caixas_barra_pesquisa">
+          <h4 class="nome_caixa_item">Desconto:</h4>
+          <input type="text" name="desconto" value="0" class="caixa2"
+            oninput="this.value = this.value.replace(/[^0-9,]/g, '').replace(/(,.*),/g, '$1');">
+        </div>
+        <div class="caixas_barra_pesquisa">
+          <h4 class="nome_caixa_item">Profissional:</h4>
+          <select name="profissional" class="caixa1">
+            <option value=""></option>
+            {% for item in profissionais %}
+            <option value="{{item.id}}">{{item.nome}}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="caixa_botoes">
+          <input type="submit" class="butao_servico" name="acao" value="Lançar Serviço">
+        </div>
+      </div>
+    </form>
+    <hr>
+  </div>
+  <div class="tela_principal">
+    <div>
+      <div style="display: flex; padding: 0 50px 0 0;">
+        <div>
+          <img src="static/imagens/logo.jpeg" width="300px" style="margin: 20px 0 0 10px;">
+        </div>
+        <div class="resumo_caixa">
+          <h4 class="titulos_lista_produtos">LISTA DE SERVICOS</h4>
+          <div class="tabela-container">
+            <table class="table-fixa">
+              <thead>
+                <tr>
+                  <th>Nº</th>
+                  <th>Cód</th>
+                  <th>Nome do serviço</th>
+                  <th>Profissional</th>
+                  <th>Valor</th>
+                  <th>Acrescimo</th>
+                  <th>Desconto</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for item in caixa_servico %}
+                <tr>
+                  <td align="center">{{ forloop.counter }}</td>
+                  <td align="center">{{ item.servico.id }}</td>
+                  <td align="left">{{ item.servico.nome }}</td>
+                  <td align="center">{{ item.profissional.nome|slice:":15" }}</td>
+                  <td align="right">{{ item.servico.valor }}</td>
+                  <td align="right">{{ item.acrescimo }}</td>
+                  <td align="right">{{ item.desconto }}</td>
+                  <td align="right">{{ item.total }}</td>
+                </tr>
+                {% endfor %}
+                <tr>
+                  <td colspan="6"></td>
+                  <td align="right"><strong>Total:</strong></td>
+                  <td align="right">R$ {{ total_caixa }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div>
+          <form method="POST" action="{% url 'servicos' %}" class="form-excluir-servico" onsubmit="return preventMultipleSubmissions(this);">
+            {% csrf_token %}
+            <div class="caixas_barra_pesquisa_excuir">
+              <h4 class="nome_caixa_item nome_caixa_item2">Nº item</4>
+              <input class="caixa2 input_caixa_item2" name="excluir_servico">
+              <input type="hidden" name="n_servico" value="{{ n_servico }}">
+            </div>
+            <div>
+              <input type="submit" name="acao" value="Excluir Serviço" class="finalizar_compra butao_excluir_servico">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br><br><br>
+
+  <!-- Parcelas -->
+  <div class="cabecalho">
+    <h1 style="text-align: center; margin-left: 600px; color: black;">LANÇAR PARCELAS</h1>
+  </div>
+  <br>
+  <form method="POST" action="{% url 'servicos' %}" onsubmit="return preventMultipleSubmissions(this);">
+    {% csrf_token %}
+    <input type="hidden" name="n_servico" value="{{ n_servico }}">
+    <div>
+      <div style="display: flex;">
+        <div class="caixas_barra_pesquisa_total">
+          <h4 class="nome_caixa_item_parcelas">Quantidade parcelas:</h4>
+          <input class="caixa2_parcelas" type="text" {% if auto_focus_parcela %} autofocus {% endif %}
+            name="quant_parcelas" value="{{quant_parcelas}}" onchange="this.form.submit()" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+          </div>
+        <div class="caixas_barra_pesquisa_total">
+          <h4 class="nome_caixa_item_parcelas">T.S:</h4>
+          <input class="caixa2_parcelas" readonly type="text" name="ts" value="R$ {{total_caixa}}">
+        </div>
+        <div class="caixas_barra_pesquisa_total">
+          <h4 class="nome_caixa_item_parcelas">T.P:</h4>
+          <input class="caixa2_parcelas" readonly type="text" name="tp" value="R$ {{total_caixa_produto}}">
+        </div>
+        <div class="caixas_barra_pesquisa_total">
+          <h4 class="nome_caixa_item_parcelas">T.G:</h4>
+          <input class="caixa2_parcelas" readonly type="text" name="tg" value="R$ {{tg}}">
+        </div>
+        <div class="caixas_barra_pesquisa_total">
+          <h4 class="nome_caixa_item_parcelas">SALDO:</h4>
+          <input class="caixa2_parcelas" readonly type="text" name="saldo" value="R$ {{saldo}}">
+        </div>
+        <div class="caixas_barra_pesquisa_total">
+          <input type="submit" class="button_fechamento" name="acao" value="Fechar Serviço / Venda">
+        </div>
+      </div>
+      <div style="display: flex;">
+        <div class="caixas_barra_pesquisa_total">
+          <h4 class="nome_caixa_item_parcelas">Forma de pagamento:</h4>
+          <select name="forma_pg" class="caixa4" required>
+            <option value="">---</option>
+            <option value="BOLETO">Boleto</option>
+            <option value="C.CREDITO">C.Crédito</option>
+            <option value="C.DEBITO">C.Débito</option>
+            <option value="DINHEIRO">Dinheiro</option>
+            <option value="PIX / TRANSFERENCIA">PIX / Transferência</option>
+          </select>
+        </div>
+
+        <div class="caixas_barra_pesquisa_total">
+          <h4 class="nome_caixa_item_parcelas">Pagador:</h4>
+          <select class="caixa4" name="pagador" required>
+            <option value="">---</option>
+            {% for item in cliente %}
+            <option value="{{item.id}}">{{ item.nome }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="caixas_barra_pesquisa_total">
+          <h4 class="nome_caixa_item_parcelas">Veiculo:</h4>
+          <select class="caixa4" name="veiculo" required>
+            <option value="">---</option>
+            {% for item in veiculos%}
+            <option value="{{item.id}}">{{item.placa}} - {{item.marca.nome}}: {{item.marca.modelo}}
+            </option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+
+      {% for parcela in quant_parcelas2 %}
+      <!-- <hr style="width: 50%; background-color: yellow; border: none; margin-left: 20px; height: 0.08px;"> -->
+      <hr class="hr_parcela">
+
+      <div style="display: flex;">
+        <div class="caixas_barra_pesquisa_total">
+          <h4 class="nome_caixa_item_parcelas">Parcela:</h4>
+          <input class="caixa2_parcelas" readonly type="text" name="parcela_{{ forloop.counter }}"
+            value="{{parcela}} / {{quant_parcelas}}">
+        </div>
+
+        <div class="caixas_barra_pesquisa_total">
+          <h4 class="nome_caixa_item_parcelas">Valor:</h4>
+          <input class="caixa2_parcelas" required name="valor_{{ forloop.counter }}" type="text" value="{{ valor_parcela }}" oninput="this.value=this.value.replace(/[^0-9,]/g, '').replace(/(,.*?)(,.*)/, '$1').replace(/(\d+),(\d{2})(\d.*)/, '$1,$2')">
+        </div>
+        <div class="caixas_barra_pesquisa_total">
+          <h4 class="nome_caixa_item_parcelas">Vencimento:</h4>
+          <input class="caixa2_parcelas widht_data" required name="vencimento_{{ forloop.counter }}" type="date"
+            name="vencimento_{{ forloop.counter}}">
+        </div>
+        <div class="caixas_barra_pesquisa_total">
+          <h4 class="nome_caixa_item_parcelas">OBS:</h4>
+          <input class="caixa2_parcelas" type="text" name="obs_{{ forloop.counter }}"
+            name="obs_{{ forloop.counter }}">
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </form>
+
+  </div>
+</div>
+
+<!-- <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Verifica se há algum elemento com autofocus dentro dos formulários específicos
+    const formLancarServico = document.querySelector('.form-lancar-servico [autofocus]');
+    const formExcluirServico = document.querySelector('.form-excluir-servico [autofocus]');
+
+    if (formLancarServico || formExcluirServico) {
+      // Define a quantidade de scroll com base no tamanho da janela
+      const scrollAmount = window.innerWidth >= 1200 ? 720 : 500; // Ajuste o limite de largura conforme necessário
+
+      // Realiza o scroll
+      window.scrollBy(0, scrollAmount);
+    }
+  });
+</script> -->
+
+<script> 
+  document.addEventListener("DOMContentLoaded", function () {
+      const inputBusca = document.getElementById("buscarProduto");
+      const selectLista = document.getElementById("listaProdutos");
+
+      function abrirSelect() {
+          selectLista.style.display = "block";
+          selectLista.size = Math.min(5, selectLista.options.length);
+      }
+
+      inputBusca.addEventListener("input", function () {
+          abrirSelect();
+          let termo = inputBusca.value.toLowerCase().trim();
+          let opcoes = selectLista.getElementsByTagName("option");
+
+          let criterios = termo.split("%").map(c => c.trim());
+          let temResultado = false;
+
+          for (let i = 0; i < opcoes.length; i++) {
+              let texto = opcoes[i].textContent.toLowerCase().trim();
+              let textoNormalizado = texto.replace(/\s+/g, " ").replace(/-+/g, "-");
+
+              let atendeTodos = criterios.every(c => textoNormalizado.includes(c));
+
+              if (atendeTodos) {
+                  opcoes[i].style.display = "block";
+                  temResultado = true;
+              } else {
+                  opcoes[i].style.display = "none";
+              }
+          }
+
+          if (!temResultado) {
+              selectLista.style.display = "none";
+          }
+      });
+
+      // Atualiza o input ao selecionar um item do select
+      selectLista.addEventListener("change", function () {
+          let opcaoSelecionada = selectLista.options[selectLista.selectedIndex];
+          if (opcaoSelecionada && opcaoSelecionada.value !== "") {
+              inputBusca.value = opcaoSelecionada.textContent.trim();
+          }
+      });
+
+            // Atualiza o input e define o valor correto no select ao clicar em uma opção
+      selectLista.addEventListener("mousedown", function (event) {
+          event.preventDefault(); // Impede o comportamento padrão de fechamento
+
+          let opcaoSelecionada = event.target;
+          if (opcaoSelecionada.tagName === "OPTION") {
+              inputBusca.value = opcaoSelecionada.textContent.trim();
+              selectLista.value = opcaoSelecionada.value; // Define o valor do select corretamente
+          }
+      });
+
+      // Fecha o select apenas ao clicar fora do input e do select
+      document.addEventListener("click", function (event) {
+          if (!inputBusca.contains(event.target) && !selectLista.contains(event.target)) {
+              selectLista.style.display = "none";
+          }
+      });
+
+      // Mantém o select aberto ao focar nele
+      selectLista.addEventListener("focus", function () {
+          abrirSelect();
+      });
+  });
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+      const inputServico = document.getElementById("buscarServico");
+      const selectServicos = document.getElementById("listaServicos");
+  
+      function abrirSelect() {
+          selectLista.style.display = "block";
+          selectLista.size = Math.min(5, selectLista.options.length);
+      }
+
+      inputBusca.addEventListener("input", function () {
+          abrirSelect();
+          let termo = inputBusca.value.toLowerCase().trim();
+          let opcoes = selectLista.getElementsByTagName("option");
+
+          let criterios = termo.split("%").map(c => c.trim());
+          let temResultado = false;
+
+          for (let i = 0; i < opcoes.length; i++) {
+              let texto = opcoes[i].textContent.toLowerCase().trim();
+              let textoNormalizado = texto.replace(/\s+/g, " ").replace(/-+/g, "-");
+
+              let atendeTodos = criterios.every(c => textoNormalizado.includes(c));
+
+              if (atendeTodos) {
+                  opcoes[i].style.display = "block";
+                  temResultado = true;
+              } else {
+                  opcoes[i].style.display = "none";
+              }
+          }
+
+          if (!temResultado) {
+              selectLista.style.display = "none";
+          }
+      });
+
+      // Atualiza o input ao selecionar um item do select
+      selectLista.addEventListener("change", function () {
+          let opcaoSelecionada = selectLista.options[selectLista.selectedIndex];
+          if (opcaoSelecionada && opcaoSelecionada.value !== "") {
+              inputBusca.value = opcaoSelecionada.textContent.trim();
+          }
+      });
+
+            // Atualiza o input e define o valor correto no select ao clicar em uma opção
+      selectLista.addEventListener("mousedown", function (event) {
+          event.preventDefault(); // Impede o comportamento padrão de fechamento
+
+          let opcaoSelecionada = event.target;
+          if (opcaoSelecionada.tagName === "OPTION") {
+              inputBusca.value = opcaoSelecionada.textContent.trim();
+              selectLista.value = opcaoSelecionada.value; // Define o valor do select corretamente
+          }
+      });
+
+      // Fecha o select apenas ao clicar fora do input e do select
+      document.addEventListener("click", function (event) {
+          if (!inputBusca.contains(event.target) && !selectLista.contains(event.target)) {
+              selectLista.style.display = "none";
+          }
+      });
+
+      // Mantém o select aberto ao focar nele
+      selectLista.addEventListener("focus", function () {
+          abrirSelect();
+      });
+  });
+</script>
+
+{% endblock %}

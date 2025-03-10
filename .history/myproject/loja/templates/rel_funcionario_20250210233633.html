@@ -1,0 +1,39 @@
+{% extends 'base.html' %} {% load static %} {% block body %}
+
+<!-- <div class="div_centralizada_geral"> -->
+<div class="form_fornecedor form_fornecedor_relatorio">
+    <h1>Relatório de Funcionarios</h1>
+    <hr style="width: 90%; background-color: black; margin: 0 0 30px 0;">
+    <table>
+        <thead>
+          <tr>
+            <th class="cabec_rel_prod">ID</th>
+            <th class="cabec_rel_prod">CPF</th>
+            <th class="cabec_rel_prod">Funcionario</th>
+            <th class="cabec_rel_prod">Cargo</th>
+            <th class="cabec_rel_prod">Telefone</th>
+            <th class="cabec_rel_prod">Whatsapp</th>
+            <th class="cabec_rel_prod">Email</th>
+            <th class="cabec_rel_prod">Data de Cadastro</th>
+            <th class="cabec_rel_prod">Faturamento</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in funcionario_info %}
+          <tr>
+            <td class="font_rel_est">{{ item.funcionario.id }}</td>
+            <td class="font_rel_est"><a href="{% 'servicos_por_funcionario' item.funcionario.cpf %}">{{ item.funcionario.cpf }}</a></td>
+            <td class="font_rel_est">{{ item.funcionario.nome }}</td>
+            <td class="font_rel_est">{{ item.funcionario.cargo.nome }}</td>
+            <td class="font_rel_est">{{ item.funcionario.telefone }}</td>
+            <td class="font_rel_est">{{ item.funcionario.whatsapp }}</td>
+            <td class="font_rel_est">{{ item.funcionario.email }}</td>
+            <td class="font_rel_est">{{ item.funcionario.data_cadastro|date:'d/m/Y' }}</td>
+            <td class="font_rel_est">{{ item.faturamento }}</td>
+
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+</div>
+{% endblock %}

@@ -1,0 +1,100 @@
+{% extends 'base.html' %} {% load static %} {% block body %}
+
+<div class="form_fornecedor">
+  <h1>Cadastro de Cliente</h1>
+  <hr />
+  <form method="post" action="{% url 'cadastrar_cliente' %}">
+    {% csrf_token %}
+    <table class="table_fornecedor">
+      <tr>
+        <td>
+          <label class="label_for" for="cnpj">CNPJ:</label>
+        </td>
+        <td>
+          <input type="text" id="cnpj" value="{{ cnpj }}" name="cnpj" maxlength="14" class="input_cad_cli_for" onchange="this.form.submit()" oninput="this.value=this.value.replace(/[^0-9]/g,'')" autofocus placeholder="Digite o CPF / CNPJ" required/>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label class="label_for" for="nome">Nome:</label>
+        </td>
+        <td>
+          <input
+            type="text"
+            id="nome"
+            name="nome"
+            class="input_cad_cli_for"
+            required
+            value="{{ nome }}"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label class="label_for" for="endereco">Endereço:</label>
+        </td>
+        <td>
+          <textarea
+            id="endereco"
+            name="endereco"
+            rows="2"
+            class="input_cad_cli_for"
+            required
+          >
+{{ endereco }}</textarea
+          >
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label class="label_for" for="telefone">Telefone:</label>
+        </td>
+        <td>
+          <input
+            type="text"
+            id="telefone"
+            name="telefone"
+            class="input_cad_cli_for"
+            value="{{ telefone }}"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label class="label_for" for="whatsapp">Whatsapp:</label>
+        </td>
+        <td>
+          <input
+            type="text"
+            id="whatsapp"
+            name="whatsapp"
+            class="input_cad_cli_for"
+            value="{{ whatsapp }}"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label class="label_for" for="email">E-mail:</label>
+        </td>
+        <td>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            class="input_cad_cli_for"
+            value="{{ email }}"
+          />
+        </td>
+      </tr>
+    </table>
+    <input
+      name="cadastrar"
+      class="btn_submit_for"
+      type="submit"
+      value="Cadastrar"
+    />
+  </form>
+</div>
+
+{% endblock %}

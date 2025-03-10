@@ -1,0 +1,17 @@
+{% extends 'base.html' %} {% load static %} {% block body %}
+
+<div class="form_fornecedor">
+  <h1>Custos Extras</h1>
+  <div class="caixas_barra_pesquisa">
+    <h4 class="nome_caixa_item">Fornecedor:</h4>
+    <select name="profissional" class="caixa1">
+      <option value=""></option>
+      {% for item in fornecedores %}
+      <option value="{{item.id}}">{{item.nome}}</option>
+      {% endfor %}
+    </select>
+  </div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,79 @@
+{% extends 'base.html' %} {% load static %} {% block body %}
+
+<!-- <div class="div_centralizada_geral"> -->
+<div class="form_fornecedor">
+    <h1>Cadastro do Veiculo</h1>
+    <hr style="width: 90%; background-color: black; margin: 0 0 30px 0;">
+    <form method="POST" action="{% url 'cadastro_veiculos' %}" class="form form_veiculo">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td class="label_for">Placa:</td>
+                <td><input class="input_cad_cli_for" type="text" placehonder="Digite a placa de Veiculo" name="placa" value="{{placa}}" maxlength="7" autofocus onchange="this.form.submit()" required></td>
+            </tr>
+            <tr>
+                <td class="label_for">Proprietário:</td>
+                <td><select class="input_cad_cli_for input_cad_cli_for_select" name="cliente">
+                    <option value="">---</option>
+                    {% for item in clientes %}
+                    <option value="{{item.id}}" {% if item.id == veiculo.cliente.id %} selected {% endif %}>{{item.cpf_cnpj}} - {{item.nome}}</option>
+                    {% endfor %}
+                </select></td>
+            </tr>
+            <tr>
+                <td class="label_for">Marca / Modelo:</td>
+                <td><select class="input_cad_cli_for input_cad_cli_for_select" name="marca">
+                    <option value="">---</option>
+                    {% for item in marcas %}
+                    <option value="{{item.id}}" {% if item.id == veiculo.marca.id %} selected {% endif %}>{{item.nome}} - {{item.modelo}}</option>
+                    {% endfor %}
+                </select></td>
+            </tr>
+            <tr>
+                <td class="label_for">Ano:</td>
+                <td><input class="input_cad_cli_for" type="number" value="{{veiculo.ano}}" maxlength="4" required></td>
+            </tr>
+            <tr>
+                <td class="label_for">Motor:</td>
+                <td><select class="input_cad_cli_for input_cad_cli_for_select" name="motor">
+                    <option value="">---</option>
+                    {% for item in motores %}
+                    <option value="{{item.id}}" {% if item.id == veiculo.motor.id %} selected {% endif %}>{{item.nome}}</option>
+                    {% endfor %}
+                </select></td>
+            </tr>
+            <tr>
+                <td class="label_for">Combustivel:</td>
+                <td>
+                    <select class="input_cad_cli_for input_cad_cli_for_select">
+                        <option>---</option>
+                        <option>Gasolina</option>
+                        <option>Alcool</option>
+                        <option>Flex</option>
+                        <option>Eletrico</option>
+                        <option>Híbrido</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="label_for">Transmissão</td>
+                <td>
+                    <select class="input_cad_cli_for input_cad_cli_for_select">
+                        <option value="">---</option>
+                        <option>Manual</option>
+                        <option>Automático</option>
+                        <option>Semi Automático</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="label_for">Data de Cadastrado:</td>
+                <td><input class="input_cad_cli_for" type="date" value="{{veiculo.data_cadastro}}"></td>
+            </tr>
+        </table>
+        <div class="div_1">
+            <button type="submit" class="btn_submit_for"  name="action" value="cadastrar_alterar">Gravar</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

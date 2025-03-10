@@ -1,0 +1,10 @@
+{
+  "editor.formatOnSave": true,
+  "python.analysis.diagnosticSeverityOverrides": {
+    "reportMissingModuleSource": "none"
+  },
+  "editor.wordWrap": "off",
+  "[html]": {
+    "editor.formatOnSave": false
+  }
+}

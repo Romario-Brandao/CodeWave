@@ -1,0 +1,182 @@
+{% extends 'base.html' %} {% load static %} {% block body %}
+
+<!-- <div class="div_centralizada_geral"> -->
+<div class="form_fornecedor form_fornecedor_relatorio">
+    <h1>Folha de Pagamento</h1>
+    <hr style="width: 90%; background-color: black; margin: 0 0 30px 0;">
+    <!-- Filtro de ano e mes -->
+    <form method="POST" action="{% url 'folha_pagamento' %}">
+    {% csrf_token %}
+      <div style="display: flex;">
+        <div class="checkbox-container">
+          <div class="checkbox_folha" style="display: block; border-right: 1px solid blue; padding-right: 30px;">
+            <label>2025</label>
+            <input type="checkbox" class="checkbox-ano" value="2025" {% if ano_atual == 2025 %} checked name="ano" {% endif %}>
+            <label>2026</label>
+            <input type="checkbox" class="checkbox-ano" value="2026" {% if ano_atual == 2026 %} checked name="ano" {% endif %}>
+            <label>2027</label>
+            <input type="checkbox" class="checkbox-ano" value="2027" {% if ano_atual == 2027 %} checked name="ano" {% endif %}>
+          </div>
+        </div>
+        <br>
+        <div class="checkbox-container">
+          <div class="checkbox_folha">
+            <label>JAN</label>
+            <input type="checkbox" class="checkbox-mes" value="1" {% if mes_atual == 1 %} checked name="mes" {% endif %}>
+          </div>
+          <div class="checkbox_folha">
+            <label>FEV</label>
+            <input type="checkbox" class="checkbox-mes" value="2" {% if mes_atual == 2 %} checked name="mes" {% endif %}>
+          </div>
+          <div class="checkbox_folha">
+            <label>MAR</label>
+            <input type="checkbox" class="checkbox-mes" value="3" {% if mes_atual == 3 %} checked name="mes" {% endif %}>
+          </div>
+          <div class="checkbox_folha">
+            <label>ABR</label>
+            <input type="checkbox" class="checkbox-mes" value="4" {% if mes_atual == 4 %} checked name="mes" {% endif %}>
+          </div>
+          <div class="checkbox_folha">
+            <label>MAI</label>
+            <input type="checkbox" class="checkbox-mes" value="5" {% if mes_atual == 5 %} checked name="mes" {% endif %}>
+          </div>
+          <div class="checkbox_folha">
+            <label>JUN</label>
+            <input type="checkbox" class="checkbox-mes" value="6" {% if mes_atual == 6 %} checked name="mes" {% endif %}>
+          </div>
+          <div class="checkbox_folha">
+            <label>JUL</label>
+            <input type="checkbox" class="checkbox-mes" value="7" {% if mes_atual == 7 %} checked name="mes" {% endif %}>
+          </div>
+          <div class="checkbox_folha">
+            <label>AGO</label>
+            <input type="checkbox" class="checkbox-mes" value="8" {% if mes_atual == 8 %} checked name="mes" {% endif %}>
+          </div>
+          <div class="checkbox_folha">
+            <label>SET</label>
+            <input type="checkbox" class="checkbox-mes" value="9" {% if mes_atual == 9 %} checked name="mes" {% endif %}>
+          </div>
+          <div class="checkbox_folha">
+            <label>OUT</label>
+            <input type="checkbox" class="checkbox-mes" value="10" {% if mes_atual == 10 %} checked name="mes" {% endif %}>
+          </div>
+          <div class="checkbox_folha">
+            <label>NOV</label>
+            <input type="checkbox" class="checkbox-mes" value="11" {% if mes_atual == 11 %} checked name="mes" {% endif %}>
+          </div>
+          <div class="checkbox_folha">
+            <label>DEZ</label>
+            <input type="checkbox" class="checkbox-mes" value="12" {% if mes_atual == 12 %} checked name="mes" {% endif %}>
+          </div>
+        </div>
+        <div style="margin: 0 0 0 300px;">
+          <img src="static/imagens/tabela_inss_irrf2025.png" alt="Logo" width="600px"/>
+        </div>
+      </div>
+      <br>
+      <th><input type="checkbox" id="selecionarTodos"></th>
+      <th>Selecionar todos...</th>
+      <br>
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th>Nome</th>
+            <th>Cargo</th>
+            <th style="text-align: right;">Salário.B</th>
+            <th style="text-align: right;">INSS</th>
+            <th style="text-align: right;">IRRF</th>
+            <th style="text-align: right;">V.T (6%)</th>
+            <th style="text-align: right;">Salário.L</th>
+            <th style="text-align: center;">PG Salário</th>
+            <th>Dias + / -</th>
+            <th style="text-align: right;">V.A</th>
+            <th style="text-align: right;">V.T</th>
+            <th style="text-align: center;">PG V.A + V.T</th>
+            <th style="text-align: right;">FGTS</th>
+            <th style="text-align: center;">Obs</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in relatorio %}
+            <tr>
+              <th><input type="checkbox" name="funcionario{{ forloop.counter }}" value={{item.funcionario.id}} class="selecionar"></th>
+              <th>{{ item.funcionario.nome }}</th>
+              <th>{{ item.funcionario.cargo.nome }}</th>
+              <th style="text-align: right;">{{ item.funcionario.salario }}</th>
+              <th style="text-align: right;">{{ item.inss }}</th>
+              <th style="text-align: right;">{{ item.irrf }}</th>
+              <th style="text-align: right;">{{ item.desconto_vt }}</th>
+              <th style="text-align: right;">{{ item.salario_liquido }}</th>
+              <th style="text-align: center;">{{ item.pg_salario|date:"d/m/Y" }}</th>
+              <th><input type="text" name="dias_extras{{ item.funcionario.id }}" value="{{ item.dias_extras }}" class="input_folha"></th>
+              <th style="text-align: right;">{{ item.va|floatformat:'2' }}</th>
+              <th style="text-align: right;">{{ item.vt|floatformat:'2' }}</th>
+              <th style="text-align: center;">{{ item.pg_va_vt|date:"d/m/Y" }}</th>
+              <th style="text-align: right;">{{ item.fgts }}</th>
+              <th style="text-align: center;"><input type="text" name="obs{{ item.funcionario.id }}" class="input_folha"></th>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <br>
+      <div style="display: flex;">
+        <label>Pagamento Salário:</label>
+        <input type="date" name="pagamento_salario">
+        <input type="submit" name="acao" value="Pagamento Salário">
+      </div>
+      <br>
+      <div style="display: flex;">
+        <label>Pagamento V.A + V.T:</label>
+        <input type="date" name='pg_va_vt'>
+        <input type="submit" name="acao" value="Pagamento Vales">
+      </div>
+      <br>
+    </form>
+    <form method="POST" action="{% url 'folha_pagamento' %}">
+      {% csrf_token %}
+      <div style="display: flex;">
+        <label>Dias Uteis no mês</label>
+        <input type="hidden" name="mes" value="{{mes_atual}}">
+        <input type="hidden" name="ano" value="{{ano_atual}}">
+        <input name="quant_dias" value="{{quant_dias}}">
+        {% if not quant_dias %} 
+          <input type="submit" name="acao" value="Gravar">
+        {% endif %}
+        </div>
+    </form>
+
+</div>
+<script>
+  document.getElementById("selecionarTodos").addEventListener("change", function() {
+      let checkboxes = document.querySelectorAll(".selecionar");
+      checkboxes.forEach(checkbox => {
+          checkbox.checked = this.checked;
+      });
+  });
+</script>
+
+<script>
+  document.querySelectorAll(".checkbox-mes").forEach(checkbox => {
+      checkbox.addEventListener("change", function() {
+          document.querySelectorAll(".checkbox-mes").forEach(cb => {
+              if (cb !== this) {
+                  cb.checked = false;
+              }
+          });
+      });
+  });
+</script>
+<script>
+  document.querySelectorAll(".checkbox-ano").forEach(checkbox => {
+      checkbox.addEventListener("change", function() {
+          document.querySelectorAll(".checkbox-ano").forEach(cb => {
+              if (cb !== this) {
+                  cb.checked = false;
+              }
+          });
+      });
+  });
+</script>
+
+  {% endblock %}

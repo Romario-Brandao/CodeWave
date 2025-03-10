@@ -1,0 +1,69 @@
+{% extends 'base.html' %} {% load static %} {% block body %}
+
+<div class="form_fornecedor" style="width: 90%;">
+  <h1>Custos Extras</h1>
+  <div class="div_pai_custos_extras">
+    <div style="display: flex;">
+      <div class="caixas_barra_pesquisa_total">
+        <h4 class="nome_caixa_item_parcelas">Fornecedor:</h4>
+        <select name="fornecedor" class="caixa4">
+          <option value=""></option>
+          {% for item in fornecedores %}
+          <option value="{{item.id}}">{{item.nome}}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="caixas_barra_pesquisa_total">
+        <h4 class="nome_caixa_item_parcelas">Referência:</h4>
+        <select name="forma_pg" class="caixa4" required>
+          <option value="">---</option>
+        <option value="AGUA">Água</option>
+        <option value="CONTADOR">Contador</option>
+        <option value="ENERGIA">Energia</option>
+        <option value="INTERNET">Internet</option>
+        <option value="SISTEMA ERP">Sistema ERP</option>
+        <!-- <option value="ENERGIA"></option> -->
+        </select>
+      </div>
+      <div class="caixas_barra_pesquisa_total">
+        <h4 class="nome_caixa_item_parcelas">Parcela:</h4>
+        <input type="text" name="parcela" class="caixa4" value="1 / 1"> 
+      </div>
+      <div class="caixas_barra_pesquisa_total">
+        <h4 class="nome_caixa_item_parcelas">Forma de pagamento:</h4>
+        <select name="forma_pg" class="caixa4" required>
+          <option value="">---</option>
+          <option value="BOLETO">Boleto</option>
+          <option value="C.CREDITO">C.Crédito</option>
+          <option value="C.DEBITO">C.Débito</option>
+          <option value="DINHEIRO">Dinheiro</option>
+          <option value="PIX / TRANSFERENCIA">PIX / Transferência</option>
+        </select>
+      </div>
+      <div class="caixas_barra_pesquisa_total">
+        <h4 class="nome_caixa_item_parcelas">Valor:</h4>
+        <input class="caixa2_parcelas" required name="valor" type="text" value="{{ valor_parcela }}" oninput="this.value=this.value.replace(/[^0-9,]/g, '').replace(/(,.*?)(,.*)/, '$1').replace(/(\d+),(\d{2})(\d.*)/, '$1,$2')">
+      </div>
+  </div>
+  <div style="display: flex;">
+    <div class="caixas_barra_pesquisa_total">
+      <h4 class="nome_caixa_item_parcelas">Vencimento:</h4>
+      <input class="caixa2_parcelas widht_data" required name="vencimento" type="date">
+    </div>
+    <div class="caixas_barra_pesquisa_total">
+      <h4 class="nome_caixa_item_parcelas">Pagamento:</h4>
+      <input class="caixa2_parcelas widht_data" name="pagamento" type="date"
+      name="vencimento">
+    </div>
+    <div class="caixas_barra_pesquisa_total">
+      <h4 class="nome_caixa_item_parcelas">OBS:</h4>
+      <input class="caixa2_parcelas" type="text" name="obs"
+      name="obs">
+    </div>
+
+  </div>
+  
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,132 @@
+{% extends 'base.html' %} {% load static %} {% block body %}
+
+<form method="POST" action="{% url 'outras_despesas' %}">
+  {% csrf_token %}
+  <div class="form_fornecedor" style="width: 75%;">
+    <h1>Custos Extras</h1>
+    <div class="div_pai_custos_extras">
+      <div style="display: flex;">
+        <div class="caixas_barra_pesquisa_total tamanho_cod_produto3">
+          <h4 class="nome_caixa_item tamanho_cod_produto2">Nº Caixa:</h4>
+          <input class="caixa2 tamanho_cod_produto" name="n_servico" value='{{ n_servico }}' readonly>
+        </div>
+        <div class="caixas_barra_pesquisa_total" style="margin-left:-30px ;">
+          <h4 class="nome_caixa_item_parcelas">Quantidade parcelas:</h4>
+          <input class="caixa2_parcelas" type="text" {% if auto_focus_parcela %} autofocus {% endif %}
+            name="quant_parcelas" value="{{quant_parcelas}}" onchange="this.form.submit()" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+        </div>
+        <div class="caixas_barra_pesquisa_total">
+          <h4 class="nome_caixa_item_parcelas">Fornecedor:</h4>
+          <select name="fornecedor" class="caixa4" required>
+            <option value=""></option>
+            {% for item in fornecedores %}
+            <option value="{{item.id}}">{{item.nome}}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="caixas_barra_pesquisa_total">
+          <h4 class="nome_caixa_item_parcelas">Referência:</h4>
+          <select name="referencia" class="caixa4" required>
+            <option value="">---</option>
+            <option value="AGUA">Água</option>
+            <option value="ALUQUEL">Aluguel</option>
+            <option value="CONTADOR">Contador</option>
+            <option value="EMPRESTIMO">Emprestimo</option>
+            <option value="ENERGIA">Energia</option>
+            <option value="INTERNET">Internet</option>
+            <option value="SISTEMA ERP">Sistema ERP</option>
+            <!-- <option value="ENERGIA"></option> -->
+          </select>
+        </div>
+        <!-- <div class="caixas_barra_pesquisa_total">
+          <h4 class="nome_caixa_item_parcelas">Parcela:</h4>
+          <input type="text" name="parcela" class="caixa2_parcelas" value="1 / 1"> 
+        </div> -->
+        <div class="caixas_barra_pesquisa_total">
+          <h4 class="nome_caixa_item_parcelas">Forma de pagamento:</h4>
+          <select name="forma_pg" class="caixa4" required>
+            <option value="">---</option>
+            <option value="BOLETO">Boleto</option>
+            <option value="C.CREDITO">C.Crédito</option>
+            <option value="C.DEBITO">C.Débito</option>
+            <option value="DINHEIRO">Dinheiro</option>
+            <option value="PIX / TRANSFERENCIA">PIX / Transferência</option>
+          </select>
+        </div>
+        <div class="caixas_barra_pesquisa_total">
+          <h4 class="nome_caixa_item_parcelas">Valor:</h4>
+          <input class="caixa2_parcelas" required name="valor" type="text" value="{{ valor_parcela }}" oninput="this.value=this.value.replace(/[^0-9,]/g, '').replace(/(,.*?)(,.*)/, '$1').replace(/(\d+),(\d{2})(\d.*)/, '$1,$2')">
+        </div>
+      </div>
+      <div style="display: flex;">
+        <div class="caixas_barra_pesquisa_total">
+          <h4 class="nome_caixa_item_parcelas">Vencimento:</h4>
+          <input class="caixa2_parcelas widht_data" name="vencimento" type="date" required>
+        </div>
+        <div class="caixas_barra_pesquisa_total">
+          <h4 class="nome_caixa_item_parcelas">Pagamento:</h4>
+          <input class="caixa2_parcelas widht_data" name="data_pg" type="date">
+        </div>
+        <div class="caixas_barra_pesquisa_total">
+          <h4 class="nome_caixa_item_parcelas">OBS:</h4>
+          <input class="caixa2_parcelas" type="text" name="obs">
+        </div>
+        <div style="margin: 0 10px 0 30px;">
+          <input class="butao_servico" type="submit" name="acao" value="Lançar Custo">
+        </div>
+        <div style="margin: 0 10px 0 0;">
+          <input class="butao_servico" type="submit" name="acao" value="Lançar Pagamento">
+        </div>
+        <div style="margin: 0 10px 0 0;">
+          <input class="butao_servico" type="submit" name="acao" value="Excluir">
+        </div>
+      </div>
+      {% for parcela in quant_parcelas2 %}
+      <hr class="hr_parcela">
+
+      <div style="display: flex;">
+        <div class="caixas_barra_pesquisa_total">
+          <h4 class="nome_caixa_item_parcelas">Parcela:</h4>
+          <input class="caixa2_parcelas" readonly type="text" name="parcela_{{ forloop.counter }}"
+            value="{{parcela}} / {{quant_parcelas}}">
+        </div>
+
+        <div class="caixas_barra_pesquisa_total">
+          <h4 class="nome_caixa_item_parcelas">Valor:</h4>
+          <input class="caixa2_parcelas" required name="valor_{{ forloop.counter }}" type="text" value="{{ valor_parcela }}" oninput="this.value=this.value.replace(/[^0-9,]/g, '').replace(/(,.*?)(,.*)/, '$1').replace(/(\d+),(\d{2})(\d.*)/, '$1,$2')">
+        </div>
+        <div class="caixas_barra_pesquisa_total">
+          <h4 class="nome_caixa_item_parcelas">Vencimento:</h4>
+          <input class="caixa2_parcelas widht_data" required name="vencimento_{{ forloop.counter }}" type="date">
+        </div>
+        <div class="caixas_barra_pesquisa_total">
+          <h4 class="nome_caixa_item_parcelas">OBS:</h4>
+          <input class="caixa2_parcelas" type="text" name="obs_{{ forloop.counter }}">
+        </div>
+      </div>
+      {% endfor %}
+      <hr>
+      <br>
+      <table>
+        <tbody>
+          <tr>
+            <td>ID</td>
+            <td>Fornecedor</td>
+            <td>Referência</td>
+            <td>Parcela</td>
+            <td>Forma de Pagamento</td>
+            <td>Valor</td>
+            <td>Vencimento</td>
+            <td>Pagamento</td>
+            <td>Obs</td>
+          </tr>
+        </tbody>
+      </table>
+      <br><br>
+    </div>
+  </div>
+</form>
+
+
+
+{% endblock %}
