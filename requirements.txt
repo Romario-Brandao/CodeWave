@@ -20,6 +20,7 @@ psycopg2==2.9.9
 pyparsing==3.1.4
 python-dateutil==2.9.0.post0
 pytz==2024.2
+pywin32==306; sys_platform == 'win32'
 # pywin32==306 retirado pois 
 reportlab==4.3.1
 requests==2.31.0
